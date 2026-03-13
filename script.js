@@ -317,7 +317,49 @@ function toggleProjectDetails(projectId) {
     renderProjects();
 }
 
-// ===== THEME TOGGLE with RIPPLE EFFECT =====
+// ===== THEME MANAGEMENT =====
+
+/**
+ * Set theme based on time of day
+ * 7 AM – 7 PM : light
+ * 7 PM – 7 AM : dark
+ */
+function setThemeByTime() {
+    const hour = new Date().getHours();
+    const isNight = hour >= 19 || hour < 7; // 7 PM to 7 AM
+
+    if (isNight) {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
+    }
+    updateThemeIcons();
+}
+
+/**
+ * Update sun/moon icons based on current body class
+ */
+function updateThemeIcons() {
+    const toggleBtn = document.getElementById('themeToggle');
+    if (!toggleBtn) return;
+
+    const sunIcon = toggleBtn.querySelector('.sun-icon');
+    const moonIcon = toggleBtn.querySelector('.moon-icon');
+    const isDark = document.body.classList.contains('dark-mode');
+
+    if (isDark) {
+        sunIcon?.classList.add('hidden');
+        moonIcon?.classList.remove('hidden');
+    } else {
+        sunIcon?.classList.remove('hidden');
+        moonIcon?.classList.add('hidden');
+    }
+}
+
+/**
+ * Initialize theme toggle button with manual override
+ * and load saved preference or time-based theme
+ */
 function initThemeToggle() {
     const toggleBtn = document.getElementById('themeToggle');
     if (!toggleBtn) {
@@ -333,20 +375,28 @@ function initThemeToggle() {
         return;
     }
 
-    // Load saved theme
+    // Check for saved preference from today
     const savedTheme = localStorage.getItem('theme');
-    const isDark = savedTheme === 'dark';
+    const lastSet = localStorage.getItem('themeLastSet');
+    const today = new Date().toDateString();
 
-    // Apply correct class and icon visibility
-    if (isDark) {
-        document.body.classList.add('dark-mode');
-        sunIcon.classList.add('hidden');
-        moonIcon.classList.remove('hidden');
+    if (savedTheme && lastSet === today) {
+        // Use manual preference
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
     } else {
-        document.body.classList.remove('dark-mode');
-        sunIcon.classList.remove('hidden');
-        moonIcon.classList.add('hidden');
+        // No manual preference today → use time-based
+        setThemeByTime();
+        // Clear any old saved theme
+        localStorage.removeItem('theme');
+        localStorage.removeItem('themeLastSet');
     }
+
+    // Ensure icons match current theme
+    updateThemeIcons();
 
     // Ripple effect helper
     function createRipple(event) {
@@ -373,24 +423,20 @@ function initThemeToggle() {
         setTimeout(() => ripple.remove(), 600);
     }
 
-    // Toggle on click
+    // Manual toggle click
     toggleBtn.addEventListener('click', (e) => {
-        // Toggle dark mode class
+        // Toggle theme
         document.body.classList.toggle('dark-mode');
         const isDarkNow = document.body.classList.contains('dark-mode');
 
-        // Update icons
-        if (isDarkNow) {
-            sunIcon.classList.add('hidden');
-            moonIcon.classList.remove('hidden');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            sunIcon.classList.remove('hidden');
-            moonIcon.classList.add('hidden');
-            localStorage.setItem('theme', 'light');
-        }
+        // Save preference with today's date
+        localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+        localStorage.setItem('themeLastSet', new Date().toDateString());
 
-        // Add ripple
+        // Update icons
+        updateThemeIcons();
+
+        // Add ripple effect
         createRipple(e);
     });
 }
@@ -402,5 +448,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     initCategoryFilters();
     renderProjects();
-    initThemeToggle(); // new theme toggle
+    initThemeToggle(); // now handles auto time‑based theme
 });
