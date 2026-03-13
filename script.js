@@ -317,6 +317,84 @@ function toggleProjectDetails(projectId) {
     renderProjects();
 }
 
+// ===== THEME TOGGLE with RIPPLE EFFECT =====
+function initThemeToggle() {
+    const toggleBtn = document.getElementById('themeToggle');
+    if (!toggleBtn) {
+        console.warn('Theme toggle button not found');
+        return;
+    }
+
+    const sunIcon = toggleBtn.querySelector('.sun-icon');
+    const moonIcon = toggleBtn.querySelector('.moon-icon');
+
+    if (!sunIcon || !moonIcon) {
+        console.warn('Sun or moon icon missing');
+        return;
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark';
+
+    // Apply correct class and icon visibility
+    if (isDark) {
+        document.body.classList.add('dark-mode');
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+    } else {
+        document.body.classList.remove('dark-mode');
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+    }
+
+    // Ripple effect helper
+    function createRipple(event) {
+        const button = event.currentTarget;
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+
+        const rect = button.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
+
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.position = 'absolute';
+        ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
+        ripple.style.borderRadius = '50%';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple-animation 0.6s ease-out';
+        ripple.style.pointerEvents = 'none';
+
+        button.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+    }
+
+    // Toggle on click
+    toggleBtn.addEventListener('click', (e) => {
+        // Toggle dark mode class
+        document.body.classList.toggle('dark-mode');
+        const isDarkNow = document.body.classList.contains('dark-mode');
+
+        // Update icons
+        if (isDarkNow) {
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+            localStorage.setItem('theme', 'light');
+        }
+
+        // Add ripple
+        createRipple(e);
+    });
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     initIcons();
@@ -324,4 +402,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     initCategoryFilters();
     renderProjects();
+    initThemeToggle(); // new theme toggle
 });
