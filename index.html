@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matthew Lynn</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-content">
+                <!-- Logo -->
+                <div class="nav-logo">
+                    <div class="logo-circle">
+                        <svg class="logo-svg" fill="none" viewBox="0 0 412 404">
+                            <path d="M334.680054,336.909821 C323.769989,347.819885 304.709961,347.819885 293.809875,336.909821 L206,249.099945 L118.190125,336.909821 C107.280060,347.819885 88.220032,347.819885 77.319946,336.909821 C66.409882,326.009735 66.409882,306.949707 77.319946,296.039642 L165.129822,208.229767 L77.319946,120.419891 C66.409882,109.509827 66.409882,90.449799 77.319946,79.549713 C88.220032,68.639648 107.280060,68.639648 118.190125,79.549713 L206,167.359589 L293.809875,79.549713 C304.709961,68.639648 323.769989,68.639648 334.680054,79.549713 C345.590118,90.449799 345.590118,109.509827 334.680054,120.419891 L246.870178,208.229767 L334.680054,296.039642 C345.590118,306.949707 345.590118,326.009735 334.680054,336.909821 Z" stroke="#c0697c" stroke-width="5" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="nav-links desktop-nav">
+                    <button class="nav-btn" data-section="hero">Home</button>
+                    <button class="nav-btn" data-section="about">About</button>
+                    <button class="nav-btn" data-section="portfolio">Portfolio</button>
+                    <button class="nav-btn" data-section="services">Services</button>
+                    <button class="nav-btn" data-section="contact">Contact</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i data-lucide="menu" class="menu-icon"></i>
+                    <i data-lucide="x" class="close-icon hidden"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <button class="nav-btn mobile" data-section="hero">Home</button>
+                <button class="nav-btn mobile" data-section="about">About</button>
+                <button class="nav-btn mobile" data-section="portfolio">Portfolio</button>
+                <button class="nav-btn mobile" data-section="services">Services</button>
+                <button class="nav-btn mobile" data-section="contact">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-overlay">
+            <img alt="Workspace designer scene" class="hero-bg-image" src="" />
+        </div>
+        <div class="hero-content">
+            <div class="hero-logo-container">
+                <div class="hero-logo">
+                    <svg class="hero-svg" fill="none" viewBox="0 0 412 404">
+                        <path d="M334.680054,336.909821 C323.769989,347.819885 304.709961,347.819885 293.809875,336.909821 L206,249.099945 L118.190125,336.909821 C107.280060,347.819885 88.220032,347.819885 77.319946,336.909821 C66.409882,326.009735 66.409882,306.949707 77.319946,296.039642 L165.129822,208.229767 L77.319946,120.419891 C66.409882,109.509827 66.409882,90.449799 77.319946,79.549713 C88.220032,68.639648 107.280060,68.639648 118.190125,79.549713 L206,167.359589 L293.809875,79.549713 C304.709961,68.639648 323.769989,68.639648 334.680054,79.549713 C345.590118,90.449799 345.590118,109.509827 334.680054,120.419891 L246.870178,208.229767 L334.680054,296.039642 C345.590118,306.949707 345.590118,326.009735 334.680054,336.909821 Z" stroke="white" stroke-width="5" />
+                    </svg>
+                </div>
+            </div>
+            <h1 class="hero-title">Creative Designer</h1>
+            <p class="hero-subtitle">Bringing Your Vision to Life</p>
+            <button class="hero-btn" data-section="portfolio">View My Work</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <!-- Left side - Image/Visual -->
+                <div class="about-image-container">
+                    <div class="about-bg-shape"></div>
+                    <div class="about-card">
+                        <div class="about-logo-wrapper">
+                            <svg class="about-svg" fill="none" viewBox="0 0 412 404">
+                                <path d="M334.680054,336.909821 C323.769989,347.819885 304.709961,347.819885 293.809875,336.909821 L206,249.099945 L118.190125,336.909821 C107.280060,347.819885 88.220032,347.819885 77.319946,336.909821 C66.409882,326.009735 66.409882,306.949707 77.319946,296.039642 L165.129822,208.229767 L77.319946,120.419891 C66.409882,109.509827 66.409882,90.449799 77.319946,79.549713 C88.220032,68.639648 107.280060,68.639648 118.190125,79.549713 L206,167.359589 L293.809875,79.549713 C304.709961,68.639648 323.769989,68.639648 334.680054,79.549713 C345.590118,90.449799 345.590118,109.509827 334.680054,120.419891 L246.870178,208.229767 L334.680054,296.039642 C345.590118,306.949707 345.590118,326.009735 334.680054,336.909821 Z" stroke="#c0697c" stroke-width="5" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right side - Story -->
+                <div class="about-content">
+                    <h2 class="section-title">My Creative Journey</h2>
+                    
+                    <div class="about-text">
+                        <p>
+                            Hey there! I'm a passionate designer with over 5 years of experience turning ideas into beautiful, 
+                            functional designs. My journey started with a simple sketchbook and a dream to create things that 
+                            make people smile.
+                        </p>
+                        
+                        <p>
+                            From brand identities to social media campaigns, I've had the privilege of working with amazing 
+                            clients across different industries. Every project is a new story waiting to be told, and I love 
+                            being the one to bring those stories to life through thoughtful design.
+                        </p>
+                        
+                        <p>
+                            What drives me? It's the moment when a client sees their vision come alive for the first time. 
+                            That spark of joy, that "wow" moment – that's what keeps me creating, innovating, and pushing 
+                            the boundaries of design.
+                        </p>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">Projects Done</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio-section">
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">Explore my latest work across different design disciplines</p>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="category-filters" id="categoryFilters">
+                <button class="filter-btn active" data-category="All">All</button>
+                <button class="filter-btn" data-category="UI/UX">UI/UX</button>
+                <button class="filter-btn" data-category="Branding">Branding</button>
+                <button class="filter-btn" data-category="Web Design">Web Design</button>
+                <button class="filter-btn" data-category="Social Media">Social Media</button>
+                <button class="filter-btn" data-category="Print Design">Print Design</button>
+                <button class="filter-btn" data-category="Illustration">Illustration</button>
+            </div>
+
+            <!-- Projects Counter -->
+            <div class="projects-counter">
+                <p id="projectsCount">Showing 6 projects</p>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects will be dynamically inserted here -->
+            </div>
+
+            <!-- View All CTA (removed) -->
+            <div class="cta-container" id="ctaContainer"></div>
+
+            <!-- Empty State -->
+            <div class="empty-state hidden" id="emptyState">
+                <div class="empty-icon">
+                    <i data-lucide="palette"></i>
+                </div>
+                <h3>No projects found</h3>
+                <p>Try selecting a different category</p>
+                <button class="empty-btn" data-category="All">View All Projects</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <!-- Decorative elements -->
+        <div class="sparkle-left">
+            <i data-lucide="sparkles"></i>
+        </div>
+        <div class="sparkle-right">
+            <i data-lucide="sparkles"></i>
+        </div>
+        
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <div class="services-title-wrapper">
+                    <i data-lucide="sparkles" class="title-sparkle"></i>
+                    <h2 class="section-title">SERVICES I PROVIDE</h2>
+                    <i data-lucide="sparkles" class="title-sparkle"></i>
+                </div>
+                <p class="section-subtitle">Transform your brand with professional design services tailored to your needs</p>
+            </div>
+
+            <div class="services-wrapper">
+                <div class="services-inner">
+                    <div class="services-grid">
+                        <!-- Social Media Design -->
+                        <div class="service-card">
+                            <div class="service-gradient"></div>
+                            <div class="service-content">
+                                <div class="service-icon-wrapper">
+                                    <div class="service-icon">
+                                        <i data-lucide="instagram"></i>
+                                    </div>
+                                </div>
+                                <h3 class="service-title">SOCIAL MEDIA DESIGN</h3>
+                                <p class="service-description">Elevate your social presence with stunning visuals</p>
+                                <div class="service-divider"></div>
+                                <ul class="service-list">
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Instagram Posts & Stories</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Facebook Cover</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Social Media Templates</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Youtube Thumbnails</span>
+                                    </li>
+                                </ul>
+                                <div class="service-cta">
+                                    <button class="service-btn">Learn More</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Print Design -->
+                        <div class="service-card">
+                            <div class="service-gradient"></div>
+                            <div class="service-content">
+                                <div class="service-icon-wrapper">
+                                    <div class="service-icon">
+                                        <i data-lucide="printer"></i>
+                                    </div>
+                                </div>
+                                <h3 class="service-title">PRINT DESIGN</h3>
+                                <p class="service-description">Professional print materials that leave an impression</p>
+                                <div class="service-divider"></div>
+                                <ul class="service-list">
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Business Cards</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Brochures & Flyers</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Posters</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Banners</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Packaging Design</span>
+                                    </li>
+                                </ul>
+                                <div class="service-cta">
+                                    <button class="service-btn">Learn More</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Illustration -->
+                        <div class="service-card">
+                            <div class="service-gradient"></div>
+                            <div class="service-content">
+                                <div class="service-icon-wrapper">
+                                    <div class="service-icon">
+                                        <i data-lucide="palette"></i>
+                                    </div>
+                                </div>
+                                <h3 class="service-title">ILLUSTRATION</h3>
+                                <p class="service-description">Custom artwork that brings your ideas to life</p>
+                                <div class="service-divider"></div>
+                                <ul class="service-list">
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Custom Icons</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Character Designs</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Decorative Elements</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Pattern Designs</span>
+                                    </li>
+                                    <li>
+                                        <div class="service-check">
+                                            <i data-lucide="check"></i>
+                                        </div>
+                                        <span>Logo Illustrations</span>
+                                    </li>
+                                </ul>
+                                <div class="service-cta">
+                                    <button class="service-btn">Learn More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <h2 class="section-title">Let's Work Together</h2>
+            <p class="contact-subtitle">Ready to bring your project to life? Reach out!</p>
+            
+            <div class="contact-icons">
+                <!-- Instagram -->
+                <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer" class="contact-icon" aria-label="Instagram">
+                    <i data-lucide="instagram"></i>
+                </a>
+                
+                <!-- WhatsApp -->
+                <a href="https://wa.me/7339628658" target="_blank" rel="noopener noreferrer" class="contact-icon" aria-label="WhatsApp">
+                    <i data-lucide="message-circle"></i>
+                </a>
+                
+                <!-- Email -->
+                <a href="mailto:matthewlynn0105@gmail.com" class="contact-icon" aria-label="Email">
+                    <i data-lucide="mail"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <svg class="footer-svg" fill="none" viewBox="0 0 412 404">
+                    <path d="M334.680054,336.909821 C323.769989,347.819885 304.709961,347.819885 293.809875,336.909821 L206,249.099945 L118.190125,336.909821 C107.280060,347.819885 88.220032,347.819885 77.319946,336.909821 C66.409882,326.009735 66.409882,306.949707 77.319946,296.039642 L165.129822,208.229767 L77.319946,120.419891 C66.409882,109.509827 66.409882,90.449799 77.319946,79.549713 C88.220032,68.639648 107.280060,68.639648 118.190125,79.549713 L206,167.359589 L293.809875,79.549713 C304.709961,68.639648 323.769989,68.639648 334.680054,79.549713 C345.590118,90.449799 345.590118,109.509827 334.680054,120.419891 L246.870178,208.229767 L334.680054,296.039642 C345.590118,306.949707 345.590118,326.009735 334.680054,336.909821 Z" stroke="#c0697c" stroke-width="5" />
+                </svg>
+            </div>
+            <p>© 2026 Matthew Lynn. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
