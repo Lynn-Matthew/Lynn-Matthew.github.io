@@ -690,8 +690,8 @@ body {
 }
 
 .like-btn.liked svg {
-    fill: var(--medium-blue);
-    stroke: var(--medium-blue);
+    fill: #e11d48;
+    stroke: #e11d48;
 }
 
 .project-info {
