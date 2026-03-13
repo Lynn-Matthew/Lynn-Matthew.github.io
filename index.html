@@ -22,13 +22,47 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation -->
+                <!-- Desktop Navigation with Icons -->
                 <div class="nav-links desktop-nav">
-                    <button class="nav-btn" data-section="hero">Home</button>
-                    <button class="nav-btn" data-section="about">About</button>
-                    <button class="nav-btn" data-section="portfolio">Portfolio</button>
-                    <button class="nav-btn" data-section="services">Services</button>
-                    <button class="nav-btn" data-section="contact">Contact</button>
+                    <!-- Home -->
+                    <div class="nav-icon-item">
+                        <button class="nav-icon-btn" data-section="hero">
+                            <i data-lucide="home"></i>
+                            <span class="nav-icon-text">Home</span>
+                        </button>
+                    </div>
+                    
+                    <!-- About -->
+                    <div class="nav-icon-item">
+                        <button class="nav-icon-btn" data-section="about">
+                            <i data-lucide="user"></i>
+                            <span class="nav-icon-text">About</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Portfolio -->
+                    <div class="nav-icon-item">
+                        <button class="nav-icon-btn" data-section="portfolio">
+                            <i data-lucide="briefcase"></i>
+                            <span class="nav-icon-text">Portfolio</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Services -->
+                    <div class="nav-icon-item">
+                        <button class="nav-icon-btn" data-section="services">
+                            <i data-lucide="sparkles"></i>
+                            <span class="nav-icon-text">Services</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Contact -->
+                    <div class="nav-icon-item">
+                        <button class="nav-icon-btn" data-section="contact">
+                            <i data-lucide="mail"></i>
+                            <span class="nav-icon-text">Contact</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -42,11 +76,27 @@
         <!-- Mobile Menu -->
         <div class="mobile-menu hidden" id="mobileMenu">
             <div class="mobile-menu-content">
-                <button class="nav-btn mobile" data-section="hero">Home</button>
-                <button class="nav-btn mobile" data-section="about">About</button>
-                <button class="nav-btn mobile" data-section="portfolio">Portfolio</button>
-                <button class="nav-btn mobile" data-section="services">Services</button>
-                <button class="nav-btn mobile" data-section="contact">Contact</button>
+                <!-- Mobile menu items with icons -->
+                <button class="nav-btn mobile" data-section="hero">
+                    <i data-lucide="home"></i>
+                    <span>Home</span>
+                </button>
+                <button class="nav-btn mobile" data-section="about">
+                    <i data-lucide="user"></i>
+                    <span>About</span>
+                </button>
+                <button class="nav-btn mobile" data-section="portfolio">
+                    <i data-lucide="briefcase"></i>
+                    <span>Portfolio</span>
+                </button>
+                <button class="nav-btn mobile" data-section="services">
+                    <i data-lucide="sparkles"></i>
+                    <span>Services</span>
+                </button>
+                <button class="nav-btn mobile" data-section="contact">
+                    <i data-lucide="mail"></i>
+                    <span>Contact</span>
+                </button>
             </div>
         </div>
     </nav>

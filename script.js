@@ -100,26 +100,40 @@ function initMobileMenu() {
 
 // Smooth Scroll Navigation
 function initNavigation() {
+    // Select all elements with data-section attribute
     const navButtons = document.querySelectorAll('[data-section]');
+    
+    // Height of your fixed navigation bar (in pixels)
+    const NAV_HEIGHT = 80; // Adjust this if needed
     
     navButtons.forEach(button => {
         button.addEventListener('click', (e) => {
-            const section = e.target.getAttribute('data-section');
+            e.preventDefault();
+            const section = button.getAttribute('data-section');
             const element = document.getElementById(section);
             
             if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
+                // Get the element's position relative to the viewport
+                const elementPosition = element.getBoundingClientRect().top;
+                // Get the current scroll position
+                const offsetPosition = elementPosition + window.pageYOffset - NAV_HEIGHT;
+                
+                // Scroll to the adjusted position
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
                 
                 // Close mobile menu if open
                 const mobileMenu = document.getElementById('mobileMenu');
                 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-                const menuIcon = mobileMenuBtn.querySelector('.menu-icon');
-                const closeIcon = mobileMenuBtn.querySelector('.close-icon');
                 
-                if (!mobileMenu.classList.contains('hidden')) {
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.add('hidden');
-                    menuIcon.classList.remove('hidden');
-                    closeIcon.classList.add('hidden');
+                    const menuIcon = mobileMenuBtn.querySelector('.menu-icon');
+                    const closeIcon = mobileMenuBtn.querySelector('.close-icon');
+                    if (menuIcon) menuIcon.classList.remove('hidden');
+                    if (closeIcon) closeIcon.classList.add('hidden');
                 }
             }
         });
