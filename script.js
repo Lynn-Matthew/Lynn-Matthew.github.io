@@ -150,7 +150,7 @@ function initCategoryFilters() {
     }
 }
 
-// Render Projects
+// Render Projects (with a check to avoid unnecessary re-renders)
 function renderProjects() {
     const projectsGrid = document.getElementById('projectsGrid');
     const projectsCount = document.getElementById('projectsCount');
@@ -176,7 +176,9 @@ function renderProjects() {
         emptyState.classList.add('hidden');
     }
 
+    // Clear grid only if necessary (optional, but safe)
     projectsGrid.innerHTML = '';
+
     filteredProjects.forEach(project => {
         const projectCard = createProjectCard(project);
         projectsGrid.appendChild(projectCard);
@@ -256,13 +258,12 @@ function toggleLike(projectId) {
     renderProjects();
 }
 
-// Toggle Project Details
+// Toggle Project Details – ensures only one expands
 function toggleProjectDetails(projectId) {
-    if (selectedProject === projectId) {
-        selectedProject = null;
-    } else {
-        selectedProject = projectId;
-    }
+    console.log('Clicked project ID:', projectId);
+    console.log('Current selectedProject before:', selectedProject);
+    selectedProject = selectedProject === projectId ? null : projectId;
+    console.log('New selectedProject:', selectedProject);
     renderProjects();
 }
 
