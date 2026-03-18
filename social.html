@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Doe · Beyond Design</title>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Unique social page styles -->
+    <link rel="stylesheet" href="social.css">
+</head>
+<body>
+    <!-- Header with briefcase icon button (back to portfolio) -->
+    <header class="social-header">
+        <div class="container">
+            <a href="index.html" class="back-icon-btn" aria-label="Back to portfolio">
+                <i data-lucide="briefcase"></i>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="social-hero">
+            <div class="container">
+                <h1 class="social-title">Beyond Design</h1>
+                <p class="social-subtitle">Gaming stats, gear, and random thoughts from my desk.</p>
+            </div>
+        </section>
+
+        <!-- Gaming Section -->
+        <section class="social-section">
+            <div class="container">
+                <h2 class="section-title">Gaming</h2>
+                
+                <!-- Gaming Stats -->
+                <div class="stats-grid">
+                    <!-- Total Hours -->
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-lucide="clock"></i>
+                        </div>
+                        <div class="stat-number">1,247</div>
+                        <div class="stat-label">Hours Played</div>
+                    </div>
+
+                    <!-- Games Completed -->
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-lucide="check-circle"></i>
+                        </div>
+                        <div class="stat-number">42</div>
+                        <div class="stat-label">Games Completed</div>
+                    </div>
+
+                    <!-- Games Owned -->
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-lucide="layers"></i>
+                        </div>
+                        <div class="stat-number">153</div>
+                        <div class="stat-label">Games Owned</div>
+                    </div>
+                </div>
+
+                <!-- Genre Filters -->
+                <div class="genre-filters" id="genreFilters">
+                    <button class="genre-btn active" data-genre="all">All</button>
+                    <button class="genre-btn" data-genre="action">Action</button>
+                    <button class="genre-btn" data-genre="rpg">RPG</button>
+                    <button class="genre-btn" data-genre="adventure">Adventure</button>
+                    <button class="genre-btn" data-genre="racing">Racing</button>
+                </div>
+
+                <!-- Completed Games Grid -->
+                <div class="completed-games-grid" id="gamesGrid">
+                    <!-- Game Card 1: GTA IV (id="0") -->
+                    <div class="game-card" data-id="0" data-genre="action">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&q=80" alt="GTA IV">
+                        <div class="game-content">
+                            <h3>Grand Theft Auto IV</h3>
+                            <p class="game-genre">Action · 2008</p>
+                            <p class="game-thoughts">"A gritty story of immigrant life in Liberty City. The driving physics are heavy but satisfying."</p>
+                            <div class="rating">
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-half"></i>
+                            </div>
+                            <a href="https://steamcommunity.com/id/yourprofile/stats/12210?tab=achievements" target="_blank" class="steam-link">
+                                <i data-lucide="external-link"></i> View Achievements
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Game Card 2: Hades (id="1") -->
+                    <div class="game-card" data-id="1" data-genre="rpg">
+                        <img src="https://images.unsplash.com/photo-1611996575749-79a3a250f948?w=400&q=80" alt="Hades">
+                        <div class="game-content">
+                            <h3>Hades</h3>
+                            <p class="game-genre">RPG · 2020</p>
+                            <p class="game-thoughts">"Roguelike done right. The story unfolds with every escape attempt, and the combat is fluid."</p>
+                            <div class="rating">
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                            </div>
+                            <a href="https://steamcommunity.com/id/yourprofile/stats/1145360?tab=achievements" target="_blank" class="steam-link">
+                                <i data-lucide="external-link"></i> View Achievements
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Game Card 3: Forza Horizon 5 (id="2") -->
+                    <div class="game-card" data-id="2" data-genre="racing">
+                        <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&q=80" alt="Forza Horizon 5">
+                        <div class="game-content">
+                            <h3>Forza Horizon 5</h3>
+                            <p class="game-genre">Racing · 2021</p>
+                            <p class="game-thoughts">"The best arcade racer out there. Mexico is gorgeous, and the car list is endless."</p>
+                            <div class="rating">
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-empty"></i>
+                            </div>
+                            <a href="https://steamcommunity.com/id/yourprofile/stats/1551360?tab=achievements" target="_blank" class="steam-link">
+                                <i data-lucide="external-link"></i> View Achievements
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Game Card 4: The Witcher 3 (id="3") -->
+                    <div class="game-card" data-id="3" data-genre="rpg">
+                        <img src="https://images.unsplash.com/photo-1542751110-97427bbecf20?w=400&q=80" alt="The Witcher 3">
+                        <div class="game-content">
+                            <h3>The Witcher 3</h3>
+                            <p class="game-genre">RPG · 2015</p>
+                            <p class="game-thoughts">"A masterpiece of storytelling. Even the side quests feel meaningful."</p>
+                            <div class="rating">
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                                <i data-lucide="star" class="star-filled"></i>
+                            </div>
+                            <a href="https://steamcommunity.com/id/yourprofile/stats/292030?tab=achievements" target="_blank" class="steam-link">
+                                <i data-lucide="external-link"></i> View Achievements
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Devices -->
+        <section class="social-section">
+            <div class="container">
+                <h2 class="section-title">My Devices</h2>
+                <div class="devices-grid">
+                    <!-- Device 1: OnePlus 9 Pro -->
+                    <div class="device-card">
+                        <div class="device-icon">
+                            <i data-lucide="smartphone"></i>
+                        </div>
+                        <div class="device-content">
+                            <h3>OnePlus 9 Pro</h3>
+                            <p class="device-opinion">"Smooth 120Hz display, but battery could be better."</p>
+                        </div>
+                        <a href="https://www.amazon.com/dp/B08Y6G9R9P?tag=youraffiliate-20" target="_blank" rel="nofollow sponsored" class="amazon-cart-btn" aria-label="Buy on Amazon">
+                            <i data-lucide="shopping-cart"></i>
+                        </a>
+                    </div>
+
+                    <!-- Device 2: Sony WH-1000XM4 -->
+                    <div class="device-card">
+                        <div class="device-icon">
+                            <i data-lucide="headphones"></i>
+                        </div>
+                        <div class="device-content">
+                            <h3>Sony WH-1000XM4</h3>
+                            <p class="device-opinion">"Best noise cancellation I've ever used. Super comfortable for long flights."</p>
+                        </div>
+                        <a href="https://www.amazon.com/dp/B08FZ3T9H8?tag=youraffiliate-20" target="_blank" rel="nofollow sponsored" class="amazon-cart-btn" aria-label="Buy on Amazon">
+                            <i data-lucide="shopping-cart"></i>
+                        </a>
+                    </div>
+
+                    <!-- Device 3: Apple Watch Series 7 -->
+                    <div class="device-card">
+                        <div class="device-icon">
+                            <i data-lucide="watch"></i>
+                        </div>
+                        <div class="device-content">
+                            <h3>Apple Watch Series 7</h3>
+                            <p class="device-opinion">"Great fitness tracking, but needs daily charging."</p>
+                        </div>
+                        <a href="https://www.amazon.com/dp/B09HHV1H5W?tag=youraffiliate-20" target="_blank" rel="nofollow sponsored" class="amazon-cart-btn" aria-label="Buy on Amazon">
+                            <i data-lucide="shopping-cart"></i>
+                        </a>
+                    </div>
+
+                    <!-- Device 4: iPad Air (2022) -->
+                    <div class="device-card">
+                        <div class="device-icon">
+                            <i data-lucide="tablet"></i>
+                        </div>
+                        <div class="device-content">
+                            <h3>iPad Air (2022)</h3>
+                            <p class="device-opinion">"Perfect for sketching and reading comics."</p>
+                        </div>
+                        <a href="https://www.amazon.com/dp/B09V3JJT5D?tag=youraffiliate-20" target="_blank" rel="nofollow sponsored" class="amazon-cart-btn" aria-label="Buy on Amazon">
+                            <i data-lucide="shopping-cart"></i>
+                        </a>
+                    </div>
+
+                    <!-- Device 5: Sonos One -->
+                    <div class="device-card">
+                        <div class="device-icon">
+                            <i data-lucide="speaker"></i>
+                        </div>
+                        <div class="device-content">
+                            <h3>Sonos One</h3>
+                            <p class="device-opinion">"Rich sound, but expensive for a single speaker."</p>
+                        </div>
+                        <a href="https://www.amazon.com/dp/B07W8XX4N1?tag=youraffiliate-20" target="_blank" rel="nofollow sponsored" class="amazon-cart-btn" aria-label="Buy on Amazon">
+                            <i data-lucide="shopping-cart"></i>
+                        </a>
+                    </div>
+
+                    <!-- Device 6: Fujifilm X-T30 II -->
+                    <div class="device-card">
+                        <div class="device-icon">
+                            <i data-lucide="camera"></i>
+                        </div>
+                        <div class="device-content">
+                            <h3>Fujifilm X-T30 II</h3>
+                            <p class="device-opinion">"Beautiful film simulations, compact travel camera."</p>
+                        </div>
+                        <a href="https://www.amazon.com/dp/B09KHV8T1R?tag=youraffiliate-20" target="_blank" rel="nofollow sponsored" class="amazon-cart-btn" aria-label="Buy on Amazon">
+                            <i data-lucide="shopping-cart"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog -->
+        <section class="social-section">
+            <div class="container">
+                <h2 class="section-title">Recent Thoughts</h2>
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <h3>Why I Love Achievement Hunting</h3>
+                        <p class="blog-date">March 12, 2026</p>
+                        <p>There's something special about that little pop‑up sound…</p>
+                        <a href="#" class="blog-link">Read more →</a>
+                    </article>
+                    <article class="blog-card">
+                        <h3>Building My First Mechanical Keyboard</h3>
+                        <p class="blog-date">February 28, 2026</p>
+                        <p>Lubing switches is oddly therapeutic.</p>
+                        <a href="#" class="blog-link">Read more →</a>
+                    </article>
+                    <article class="blog-card">
+                        <h3>Game Design Lessons from Hades</h3>
+                        <p class="blog-date">January 15, 2026</p>
+                        <p>What designers can learn about feedback loops.</p>
+                        <a href="#" class="blog-link">Read more →</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="social-footer">
+        <div class="container">
+            <p>© 2026 John Doe</p>
+        </div>
+    </footer>
+
+    <!-- Game Details Modal (added) -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-body">
+                <h2 id="modalTitle"></h2>
+                <p class="modal-meta"><span id="modalGenre"></span> • <span id="modalYear"></span></p>
+                <img id="modalImage" src="" alt="" class="modal-image">
+                <div class="modal-description">
+                    <h3>Experience</h3>
+                    <p id="modalExperience"></p>
+                    <h3>Review</h3>
+                    <p id="modalReview"></p>
+                    <h3>Recommendation</h3>
+                    <p id="modalRecommendation"></p>
+                </div>
+                <a id="modalAchievements" href="#" target="_blank" class="modal-achievements-btn">View Achievements</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="social.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

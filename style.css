@@ -20,6 +20,8 @@
     --mobile-menu-bg: white;
     --border-light: #94B4C1;
     --filter-text: var(--text-primary);
+    /* Hover text for service list items – lighter for better visibility */
+    --hover-text: var(--light-blue);
 }
 
 .dark-mode {
@@ -41,6 +43,8 @@
     --mobile-menu-bg: #331D2C;       /* same as bg-primary */
     --border-light: #5A4A59;         /* same as beige – borders */
     --filter-text: #331D2C;          /* darkest color for filter button text */
+    /* Hover text – use white for maximum visibility in dark mode */
+    --hover-text: #ffffff;
 }
 
 /* Reset and Base Styles */
@@ -133,59 +137,133 @@ body {
     display: none;
     gap: 0.5rem;
     align-items: center;
-}
-
-/* Icon Navigation */
-.nav-icon-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.nav-icon-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
     padding: 0.5rem;
-    border-radius: 9999px;
+    border-radius: 15px;
+}
+
+/* Navigation Link - Expand on Hover */
+.nav-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transform-origin: center left;
+    transition: width 0.3s ease-in;
+    text-decoration: none;
+    color: var(--icon-color);
+    cursor: pointer;
+}
+
+.nav-link:before {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    display: block;
+    border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in;
+    transform-origin: center right;
+    background-color: var(--icon-bg-hover);
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    outline: 0;
+    width: 120px; /* Slightly wider to accommodate all text consistently */
+}
+
+.nav-link:hover:before,
+.nav-link:hover .link-title {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.nav-link .link-icon {
+    width: 24px;
+    height: 24px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--icon-color);
-    transition: all 0.5s ease;
-    width: 3rem;
+    flex-shrink: 0;
+    left: 13px;
+    position: absolute;
 }
 
-.nav-icon-btn:hover {
-    background: var(--icon-bg-hover);
-    transform: scale(1.1);
-}
-
-.nav-icon-btn i {
-    width: 1.5rem;
-    height: 1.5rem;
+.nav-link .link-icon i {
+    width: 24px;
+    height: 24px;
     stroke: currentColor;
-    transition: all 0.5s ease;
 }
 
-.nav-icon-text {
-    font-size: 0.75rem;
+.nav-link .link-title {
+    transform: translateX(100%);
+    transition: transform 0.2s ease-in;
+    transform-origin: center right;
+    display: block;
+    text-align: left;
+    padding-left: 45px; /* Fixed padding to create consistent space after icon */
+    width: 100%;
+    font-size: 0.9rem;
     font-weight: 500;
     opacity: 0;
-    position: absolute;
-    bottom: -0.8rem;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: opacity 0.5s ease;
     white-space: nowrap;
-    pointer-events: none;
-    color: var(--text-primary);
+    letter-spacing: 0.3px; /* Slight letter spacing for better readability */
 }
 
-.nav-icon-btn:hover .nav-icon-text {
-    opacity: 1;
+/* Dark mode adjustments */
+.dark-mode .nav-link {
+    color: var(--icon-color);
+}
+
+.dark-mode .nav-link:before {
+    background-color: var(--icon-bg-hover);
+}
+
+.dark-mode .nav-link:hover {
+    color: white;
+}
+
+.dark-mode .nav-link:hover:before {
+    background-color: var(--medium-blue);
+}
+
+/* Remove old icon navigation styles */
+.nav-icon-item,
+.nav-icon-btn,
+.nav-icon-text {
+    display: none;
+}
+
+/* Dark mode adjustments */
+.dark-mode .nav-link {
+    color: var(--icon-color);
+}
+
+.dark-mode .nav-link:before {
+    background-color: var(--icon-bg-hover);
+}
+
+.dark-mode .nav-link:hover {
+    color: white;
+}
+
+.dark-mode .nav-link:hover:before {
+    background-color: var(--medium-blue);
+}
+
+/* Remove old icon navigation styles */
+.nav-icon-item,
+.nav-icon-btn,
+.nav-icon-text {
+    display: none;
 }
 
 /* Theme Toggle Button */
@@ -359,29 +437,110 @@ body {
     margin-bottom: 2rem;
 }
 
+/* Hero Section Button - Liquid Fill Animation */
 .hero-btn {
-    padding: 1rem 2rem;
-    background: white;
+    display: inline-block;
+    transition: all 0.5s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
     color: var(--hero-btn-color);
-    border: none;
-    border-radius: 9999px;
+    padding: 1rem 2rem;
+    font-size: 18px;
     font-weight: 600;
-    cursor: pointer;
-    transition: all 0.5s ease;
+    border-radius: 9999px;
+    background: white;
+    border: 1px solid white;
     box-shadow: 0 20px 25px var(--shadow-color);
+    cursor: pointer;
+}
+
+.hero-btn:active {
+    color: #666;
+    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+}
+
+.hero-btn:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+.hero-btn:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: var(--medium-blue);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
 }
 
 .hero-btn:hover {
-    background: var(--medium-blue);
-    color: white;
-    transform: scale(1.1);
+    color: #ffffff;
+    border: 1px solid var(--medium-blue);
+    background: transparent;
 }
 
-/* About Section */
+.hero-btn:hover:before {
+    top: -35%;
+    background-color: var(--medium-blue);
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+.hero-btn:hover:after {
+    top: -45%;
+    background-color: var(--medium-blue);
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+/* Dark mode specific adjustments for better visibility */
+.dark-mode .hero-btn {
+    color: var(--hero-btn-color);
+    background: var(--card-bg);
+    border: 1px solid var(--card-bg);
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode .hero-btn:after {
+    background-color: var(--dark-blue); /* Brighter accent for dark mode */
+}
+
+.dark-mode .hero-btn:hover {
+    color: #ffffff;
+    border: 1px solid var(--dark-blue);
+}
+
+.dark-mode .hero-btn:hover:before {
+    background-color: var(--dark-blue); /* Brighter fill on hover */
+}
+
+.dark-mode .hero-btn:hover:after {
+    background-color: var(--dark-blue); /* Brighter fill on hover */
+}
+
+/* About Section – now with vertical centering */
 .about-section {
     padding: 5rem 0;
     background: var(--bg-primary);
     transition: background-color 0.5s ease;
+    min-height: 100vh;
+    display: flex;
+    align-items: center; /* vertically center the container */
 }
 
 .about-grid {
@@ -999,7 +1158,7 @@ body {
     color: white;
 }
 
-/* Hover on individual service list items when the card is hovered */
+/* Hover on individual service list items when the card is hovered (default) */
 .service-card:hover .service-list li:hover {
     color: var(--dark-blue);
 }
@@ -1010,12 +1169,23 @@ body {
     color: white;
 }
 
-/* Dark mode override – use the darkest color when hovering list item inside a hovered card */
+/* Light mode – when card is hovered and list item is hovered, use light blue for better visibility */
+:root:not(.dark-mode) .service-card:hover .service-list li:hover {
+    color: var(--light-blue);
+}
+:root:not(.dark-mode) .service-card:hover .service-list li:hover .service-check {
+    background: var(--light-blue);
+}
+:root:not(.dark-mode) .service-card:hover .service-list li:hover .service-check svg {
+    color: white;
+}
+
+/* Dark mode override – use the footer background color (#2a1723) when hovering list item inside a hovered card */
 .dark-mode .service-card:hover .service-list li:hover {
-    color: var(--bg-primary); /* darkest color #331D2C */
+    color: var(--footer-bg);
 }
 .dark-mode .service-card:hover .service-list li:hover .service-check {
-    background: var(--bg-primary);
+    background: var(--footer-bg);
 }
 .dark-mode .service-card:hover .service-list li:hover .service-check svg {
     color: white;
@@ -1132,12 +1302,12 @@ body {
     transition: color 0.5s ease;
 }
 
-/* Hover on list items when the card is NOT hovered */
+/* Hover on list items when the card is NOT hovered – now uses lighter color */
 .service-list li:hover {
-    color: var(--medium-blue);
+    color: var(--hover-text);
 }
 .service-list li:hover .service-check {
-    background: var(--medium-blue);
+    background: var(--hover-text);
 }
 .service-list li:hover .service-check svg {
     color: white;
@@ -1170,6 +1340,7 @@ body {
 /* Contact Section */
 .contact-section {
     padding: 5rem 0;
+    margin-bottom: 0.1rem; /* reduced from 2rem – adjust as needed */
     background: var(--bg-primary);
     transition: background-color 0.5s ease;
 }
@@ -1221,6 +1392,138 @@ body {
     height: 2rem;
     stroke: currentColor;
     transition: all 0.5s ease;
+}
+
+/* Contact divider – same as service divider, expands on section hover */
+.contact-divider {
+    width: 2.5rem;
+    height: 0.25rem;
+    background: var(--medium-blue);
+    margin: 2rem auto 0;
+    border-radius: 9999px;
+    transition: width 0.5s ease;
+}
+
+.contact-section:hover .contact-divider {
+    width: 7rem;
+    background: var(--dark-blue); /* optional change on hover */
+}
+
+/* ===== SOCIAL SECTION ===== */
+.social-section {
+    padding: 5rem 0;
+    background: linear-gradient(to bottom, var(--bg-primary), var(--beige));
+    transition: background-color 0.5s ease;
+}
+
+.social-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.social-card {
+    background: var(--card-bg);
+    border-radius: 30px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.5s ease;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    border: 1px solid transparent;
+}
+
+.social-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px var(--shadow-color);
+    border-color: var(--medium-blue);
+}
+
+.social-icon {
+    width: 4rem;
+    height: 4rem;
+    background: var(--beige);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: var(--medium-blue);
+    transition: all 0.5s ease;
+}
+
+.social-card:hover .social-icon {
+    background: var(--medium-blue);
+    color: white;
+}
+
+.social-icon svg {
+    width: 2rem;
+    height: 2rem;
+    stroke: currentColor;
+}
+
+.social-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    transition: color 0.5s ease;
+}
+
+.social-card:hover h3 {
+    color: var(--medium-blue);
+}
+
+.social-card p {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.social-cta {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    background: var(--medium-blue);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    text-decoration: none;
+}
+
+.social-btn:hover {
+    background: var(--dark-blue);
+    transform: scale(1.05);
+}
+
+.social-btn .btn-arrow {
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: currentColor;
+    transition: transform 0.5s ease;
+}
+
+.social-btn:hover .btn-arrow {
+    transform: translateX(5px);
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+    .social-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 /* Footer */
@@ -1526,4 +1829,100 @@ body {
     .services-inner {
         padding: 3rem;
     }
+}
+/* ===== CONTACT SECTION SOCIAL ICONS (ANIMATED) ===== */
+.contact-social-icons {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin: 3rem 0;
+    padding: 0;
+}
+
+.contact-social-icons .icon-content {
+    margin: 0 10px;
+    position: relative;
+}
+
+/* Tooltip completely removed */
+.contact-social-icons .icon-content .tooltip {
+    display: none;
+}
+
+.contact-social-icons .icon-content a {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: #4d4d4d;
+    background-color: #fff;
+    transition: all 0.5s ease-in-out;
+    text-decoration: none;
+}
+
+.contact-social-icons .icon-content a:hover {
+    box-shadow: 3px 2px 45px 0px rgb(0 0 0 / 12%);
+}
+
+.contact-social-icons .icon-content a svg,
+.contact-social-icons .icon-content a i {
+    position: relative;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    stroke: currentColor;
+}
+
+.contact-social-icons .icon-content a:hover {
+    color: white;
+}
+
+.contact-social-icons .icon-content a .filled {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.contact-social-icons .icon-content a:hover .filled {
+    height: 100%;
+}
+
+/* Instagram colors - solid muted pinkish-purple */
+.contact-social-icons .icon-content a[data-social="instagram"] .filled {
+    background: #B58DB2;  /* muted pinkish-purple */
+}
+
+/* WhatsApp colors - muted green */
+.contact-social-icons .icon-content a[data-social="whatsapp"] .filled {
+    background: #5F8B6F;  /* muted sage green */
+}
+
+/* Gmail colors - muted red */
+.contact-social-icons .icon-content a[data-social="gmail"] .filled {
+    background: #B47A7A;  /* muted dusty rose */
+}
+
+/* Dark mode adjustments */
+.dark-mode .contact-social-icons .icon-content a {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+}
+
+.dark-mode .contact-social-icons .icon-content a:hover {
+    color: white;
+}
+
+/* Remove old contact icons styles if they conflict */
+.contact-icons {
+    display: none;
 }

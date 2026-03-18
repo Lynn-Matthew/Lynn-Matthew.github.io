@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matthew Lynn</title>
+    <title>Youtube</title>
     <link rel="stylesheet" href="style.css">
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -22,47 +22,47 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation with Icons -->
-                <div class="nav-links desktop-nav">
+                <!-- Desktop Navigation with Icons - Expand on Hover -->
+                <div class="desktop-nav">
                     <!-- Home -->
-                    <div class="nav-icon-item">
-                        <button class="nav-icon-btn" data-section="hero">
+                    <a href="#" class="nav-link" data-section="hero">
+                        <span class="link-icon">
                             <i data-lucide="home"></i>
-                            <span class="nav-icon-text">Home</span>
-                        </button>
-                    </div>
+                        </span>
+                        <span class="link-title">Home</span>
+                    </a>
                     
                     <!-- About -->
-                    <div class="nav-icon-item">
-                        <button class="nav-icon-btn" data-section="about">
+                    <a href="#" class="nav-link" data-section="about">
+                        <span class="link-icon">
                             <i data-lucide="user"></i>
-                            <span class="nav-icon-text">About</span>
-                        </button>
-                    </div>
+                        </span>
+                        <span class="link-title">About</span>
+                    </a>
                     
                     <!-- Portfolio -->
-                    <div class="nav-icon-item">
-                        <button class="nav-icon-btn" data-section="portfolio">
+                    <a href="#" class="nav-link" data-section="portfolio">
+                        <span class="link-icon">
                             <i data-lucide="briefcase"></i>
-                            <span class="nav-icon-text">Portfolio</span>
-                        </button>
-                    </div>
+                        </span>
+                        <span class="link-title">Portfolio</span>
+                    </a>
                     
                     <!-- Services -->
-                    <div class="nav-icon-item">
-                        <button class="nav-icon-btn" data-section="services">
+                    <a href="#" class="nav-link" data-section="services">
+                        <span class="link-icon">
                             <i data-lucide="sparkles"></i>
-                            <span class="nav-icon-text">Services</span>
-                        </button>
-                    </div>
+                        </span>
+                        <span class="link-title">Services</span>
+                    </a>
                     
                     <!-- Contact -->
-                    <div class="nav-icon-item">
-                        <button class="nav-icon-btn" data-section="contact">
+                    <a href="#" class="nav-link" data-section="contact">
+                        <span class="link-icon">
                             <i data-lucide="mail"></i>
-                            <span class="nav-icon-text">Contact</span>
-                        </button>
-                    </div>
+                        </span>
+                        <span class="link-title">Contact</span>
+                    </a>
                 </div>
 
                 <!-- Theme Toggle Button (Sun/Moon) -->
@@ -397,24 +397,85 @@
 
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
-        <div class="contact-container">
-            <h2 class="section-title">Let's Work Together</h2>
-            <p class="contact-subtitle">Ready to bring your project to life? Reach out!</p>
-            
-            <div class="contact-icons">
-                <!-- Instagram -->
-                <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer" class="contact-icon" aria-label="Instagram">
+    <div class="contact-container">
+        <h2 class="section-title">Let's Work Together</h2>
+        <p class="contact-subtitle">Ready to bring your project to life? Reach out!</p>
+        
+        <ul class="contact-social-icons">
+            <!-- Instagram -->
+            <li class="icon-content">
+                <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="Instagram" data-social="instagram">
+                    <div class="filled"></div>
                     <i data-lucide="instagram"></i>
                 </a>
-                
-                <!-- WhatsApp -->
-                <a href="https://wa.me/7339628658" target="_blank" rel="noopener noreferrer" class="contact-icon" aria-label="WhatsApp">
+                <div class="tooltip">Instagram</div>
+            </li>
+            
+            <!-- WhatsApp -->
+            <li class="icon-content">
+                <a href="https://wa.me/7339628658" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" data-social="whatsapp">
+                    <div class="filled"></div>
                     <i data-lucide="message-circle"></i>
                 </a>
-                
-                <!-- Email -->
-                <a href="mailto:matthewlynn0105@gmail.com" class="contact-icon" aria-label="Email">
+                <div class="tooltip">WhatsApp</div>
+            </li>
+            
+            <!-- Email / Gmail -->
+            <li class="icon-content">
+                <a href="mailto:random@gmail.com" aria-label="Email" data-social="gmail">
+                    <div class="filled"></div>
                     <i data-lucide="mail"></i>
+                </a>
+                <div class="tooltip">Gmail</div>
+            </li>
+        </ul>
+
+        <!-- Decorative line -->
+        <div class="contact-divider"></div>
+    </div>
+    </section>
+
+    <!-- Social Section – a glimpse into my world -->
+    <section id="social" class="social-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Beyond Design</h2>
+                <p class="section-subtitle">A peek into my gaming stats, devices, and thoughts</p>
+            </div>
+
+            <div class="social-grid">
+                <!-- Gaming stat -->
+                <div class="social-card">
+                    <div class="social-icon">
+                        <i data-lucide="gamepad-2"></i>
+                    </div>
+                    <h3>Gaming</h3>
+                    <p>Steam Level 42 • 150+ games • Achievement hunter</p>
+                </div>
+
+                <!-- Devices -->
+                <div class="social-card">
+                    <div class="social-icon">
+                        <i data-lucide="cpu"></i>
+                    </div>
+                    <h3>Setup</h3>
+                    <p>Ryzen 7 • RTX 3070 • 32GB RAM • Mechanical keyboard</p>
+                </div>
+
+                <!-- Blog -->
+                <div class="social-card">
+                    <div class="social-icon">
+                        <i data-lucide="pen-tool"></i>
+                    </div>
+                    <h3>Blog</h3>
+                    <p>Thoughts on design, games, and life – updated monthly</p>
+                </div>
+            </div>
+
+            <div class="social-cta">
+                <a href="social.html" class="social-btn">
+                    Explore My World
+                    <i data-lucide="arrow-right" class="btn-arrow"></i>
                 </a>
             </div>
         </div>
@@ -428,7 +489,7 @@
                     <path d="M334.680054,336.909821 C323.769989,347.819885 304.709961,347.819885 293.809875,336.909821 L206,249.099945 L118.190125,336.909821 C107.280060,347.819885 88.220032,347.819885 77.319946,336.909821 C66.409882,326.009735 66.409882,306.949707 77.319946,296.039642 L165.129822,208.229767 L77.319946,120.419891 C66.409882,109.509827 66.409882,90.449799 77.319946,79.549713 C88.220032,68.639648 107.280060,68.639648 118.190125,79.549713 L206,167.359589 L293.809875,79.549713 C304.709961,68.639648 323.769989,68.639648 334.680054,79.549713 C345.590118,90.449799 345.590118,109.509827 334.680054,120.419891 L246.870178,208.229767 L334.680054,296.039642 C345.590118,306.949707 345.590118,326.009735 334.680054,336.909821 Z" stroke="#c0697c" stroke-width="5" />
                 </svg>
             </div>
-            <p>© 2026 Matthew Lynn. All rights reserved.</p>
+            <p>© 2026 All rights reserved.</p>
         </div>
     </footer>
 

@@ -86,10 +86,13 @@ function initMobileMenu() {
     });
 }
 
-// Smooth Scroll Navigation
+// Smooth Scroll Navigation – updated for perfect alignment in fullscreen
 function initNavigation() {
     const navButtons = document.querySelectorAll('[data-section]');
-    const NAV_HEIGHT = 80;
+    
+    // Get the actual height of the fixed navigation bar dynamically
+    const navbar = document.querySelector('.nav');
+    const navHeight = navbar ? navbar.offsetHeight : 80; // fallback to 80 if not found
 
     navButtons.forEach(button => {
         button.addEventListener('click', (e) => {
@@ -98,14 +101,19 @@ function initNavigation() {
             const element = document.getElementById(section);
 
             if (element) {
-                const elementPosition = element.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - NAV_HEIGHT;
+                // Get the element's current position relative to the viewport
+                const rect = element.getBoundingClientRect();
+                // Calculate the absolute position from the top of the document
+                const absoluteTop = rect.top + window.pageYOffset;
+                // Adjust by the navbar height, and subtract 1px to avoid any fractional pixel showing previous section
+                const offsetPosition = absoluteTop - navHeight - 1;
 
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
                 });
 
+                // Close mobile menu if open
                 const mobileMenu = document.getElementById('mobileMenu');
                 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 
