@@ -8,7 +8,8 @@ const projectsData = [
         client: 'Fashion Boutique',
         year: '2026',
         tags: ['Mobile Design', 'E-Commerce', 'User Research'],
-        image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80'
+        image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80',
+        link: '#'
     },
     { 
         id: 2, 
@@ -18,7 +19,8 @@ const projectsData = [
         client: 'Urban Roast Co.',
         year: '2025',
         tags: ['Logo Design', 'Packaging', 'Brand Guide'],
-        image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800&q=80'
+        image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800&q=80',
+        link: '#'
     },
     { 
         id: 3, 
@@ -28,7 +30,8 @@ const projectsData = [
         client: 'FlowAI',
         year: '2026',
         tags: ['Web Development', 'Responsive', 'Animation'],
-        image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80'
+        image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80',
+        link: '#'
     },
     { 
         id: 4, 
@@ -38,7 +41,8 @@ const projectsData = [
         client: 'Coastal Apparel',
         year: '2026',
         tags: ['Instagram', 'Content Creation', 'Photography'],
-        image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80'
+        image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80',
+        link: '#'
     },
     { 
         id: 5, 
@@ -48,7 +52,8 @@ const projectsData = [
         client: 'La Petite Maison',
         year: '2025',
         tags: ['Print', 'Illustration', 'Typography'],
-        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80'
+        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
+        link: '#'
     },
     { 
         id: 6, 
@@ -58,7 +63,8 @@ const projectsData = [
         client: 'FitTrack Pro',
         year: '2026',
         tags: ['Icons', 'Vector Graphics', 'UI Elements'],
-        image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80'
+        image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80',
+        link: '#'
     }
 ];
 
@@ -223,9 +229,14 @@ function createProjectCard(project) {
                 </div>
             </div>
 
-            <button class="project-details-btn" data-project-id="${project.id}">
-                ${isExpanded ? 'Hide Details' : 'View Details'}
-            </button>
+            <div class="project-actions">
+                <button class="project-details-btn" data-project-id="${project.id}">
+                    ${isExpanded ? 'Hide Details' : 'View Details'}
+                </button>
+                <a href="${project.link}" target="_blank" rel="noopener noreferrer" class="project-link-btn" title="View Project">
+                    <i data-lucide="external-link"></i>
+                </a>
+            </div>
         </div>
     `;
 
@@ -239,6 +250,11 @@ function createProjectCard(project) {
     detailsBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         toggleProjectDetails(project.id);
+    });
+
+    const linkBtn = card.querySelector('.project-link-btn');
+    linkBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
     });
 
     card.addEventListener('click', () => {

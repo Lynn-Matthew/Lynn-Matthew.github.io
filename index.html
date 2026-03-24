@@ -107,7 +107,7 @@
                     <span>Portfolio</span>
                 </button>
                 <button class="nav-btn mobile" data-section="services">
-                    <i data-lucide="sparkles"></i>
+                    <i data-lucide="pen-tool"></i>
                     <span>Services</span>
                 </button>
                 <button class="nav-btn mobile" data-section="contact">
@@ -135,7 +135,14 @@
             </div>
             <h1 class="hero-title">Creative Designer</h1>
             <p class="hero-subtitle">Bringing Your Vision to Life</p>
-            <button class="hero-btn" data-section="portfolio">View My Work</button>
+            <button class="hero-btn" data-section="portfolio">
+                <span class="span-mother">
+                    <span>V</span><span>i</span><span>e</span><span>w</span><span>&nbsp;</span><span>M</span><span>y</span><span>&nbsp;</span><span>W</span><span>o</span><span>r</span><span>k</span>
+                </span>
+                <span class="span-mother2">
+                    <span>V</span><span>i</span><span>e</span><span>w</span><span>&nbsp;</span><span>M</span><span>y</span><span>&nbsp;</span><span>W</span><span>o</span><span>r</span><span>k</span>
+                </span>
+            </button>
         </div>
     </section>
 
@@ -255,18 +262,18 @@
     <!-- Services Section -->
     <section id="services" class="services-section">
         <div class="sparkle-left">
-            <i data-lucide="sparkles"></i>
+            <i data-lucide="palette"></i>
         </div>
         <div class="sparkle-right">
-            <i data-lucide="sparkles"></i>
+            <i data-lucide="layers"></i>
         </div>
 
         <div class="container">
             <div class="section-header">
                 <div class="services-title-wrapper">
-                    <i data-lucide="sparkles" class="title-sparkle"></i>
+                    <i data-lucide="pen-tool" class="title-sparkle"></i>
                     <h2 class="section-title">SERVICES I PROVIDE</h2>
-                    <i data-lucide="sparkles" class="title-sparkle"></i>
+                    <i data-lucide="pen-tool" class="title-sparkle" style="transform: scaleX(-1);"></i>
                 </div>
                 <p class="section-subtitle">Transform your brand with professional design services tailored to your
                     needs</p>
@@ -379,7 +386,8 @@
                                     </div>
                                 </div>
                                 <h3 class="service-title">ILLUSTRATION</h3>
-                                <p class="service-description">Custom artwork that brings your ideas to life</p>
+                                <p class="service-description">Custom artwork and brush strokes that brings your ideas
+                                    to life</p>
                                 <div class="service-divider"></div>
                                 <ul class="service-list">
                                     <li>
@@ -427,29 +435,42 @@
             <h2 class="section-title">Let's Work Together</h2>
             <p class="contact-subtitle">Ready to bring your project to life? Reach out!</p>
 
-            <div class="contact-icons">
+            <ul class="contact-icons">
                 <!-- Instagram -->
-                <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer"
-                    class="contact-icon" aria-label="Instagram">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                </a>
+                <li class="icon-content">
+                    <a data-social="instagram" aria-label="Instagram" href="https://instagram.com/yourusername"
+                        target="_blank" rel="noopener noreferrer">
+                        <div class="filled"></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="position: relative; z-index: 5;">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <div class="tooltip">Instagram</div>
+                </li>
 
                 <!-- WhatsApp -->
-                <a href="https://wa.me/7339628658" target="_blank" rel="noopener noreferrer" class="contact-icon"
-                    aria-label="WhatsApp">
-                    <i data-lucide="message-circle"></i>
-                </a>
+                <li class="icon-content">
+                    <a data-social="whatsapp" aria-label="WhatsApp" href="https://wa.me/7339628658" target="_blank"
+                        rel="noopener noreferrer">
+                        <div class="filled"></div>
+                        <i data-lucide="message-circle"></i>
+                    </a>
+                    <div class="tooltip">WhatsApp</div>
+                </li>
 
                 <!-- Email -->
-                <a href="mailto:matthewlynn0105@gmail.com" class="contact-icon" aria-label="Email">
-                    <i data-lucide="mail"></i>
-                </a>
-            </div>
+                <li class="icon-content">
+                    <a data-social="email" aria-label="Email" href="mailto:matthewlynn0105@gmail.com">
+                        <div class="filled"></div>
+                        <i data-lucide="mail"></i>
+                    </a>
+                    <div class="tooltip">Email</div>
+                </li>
+            </ul>
 
             <!-- Decorative line -->
             <div class="contact-divider"></div>

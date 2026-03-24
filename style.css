@@ -371,8 +371,13 @@ body {
     border-radius: 9999px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.5s ease;
+    transition: background 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease, color 0.5s ease;
     box-shadow: 0 20px 25px var(--shadow-color);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero-btn:hover {
@@ -380,6 +385,50 @@ body {
     color: white;
     transform: scale(1.1);
 }
+
+.hero-btn .span-mother,
+.hero-btn .span-mother2 {
+    display: flex;
+}
+
+.hero-btn .span-mother2 {
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-btn .span-mother span,
+.hero-btn .span-mother2 span {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-btn:hover .span-mother span {
+    transform: translateY(2.5em);
+}
+
+.hero-btn .span-mother2 span {
+    transform: translateY(-2.5em);
+}
+
+.hero-btn:hover .span-mother2 span {
+    transform: translateY(0);
+}
+
+/* Staggering (12 characters) */
+.hero-btn .span-mother span:nth-child(1), .hero-btn .span-mother2 span:nth-child(1) { transition-duration: 0.2s; }
+.hero-btn .span-mother span:nth-child(2), .hero-btn .span-mother2 span:nth-child(2) { transition-duration: 0.25s; }
+.hero-btn .span-mother span:nth-child(3), .hero-btn .span-mother2 span:nth-child(3) { transition-duration: 0.3s; }
+.hero-btn .span-mother span:nth-child(4), .hero-btn .span-mother2 span:nth-child(4) { transition-duration: 0.35s; }
+.hero-btn .span-mother span:nth-child(5), .hero-btn .span-mother2 span:nth-child(5) { transition-duration: 0.4s; }
+.hero-btn .span-mother span:nth-child(6), .hero-btn .span-mother2 span:nth-child(6) { transition-duration: 0.45s; }
+.hero-btn .span-mother span:nth-child(7), .hero-btn .span-mother2 span:nth-child(7) { transition-duration: 0.5s; }
+.hero-btn .span-mother span:nth-child(8), .hero-btn .span-mother2 span:nth-child(8) { transition-duration: 0.55s; }
+.hero-btn .span-mother span:nth-child(9), .hero-btn .span-mother2 span:nth-child(9) { transition-duration: 0.6s; }
+.hero-btn .span-mother span:nth-child(10), .hero-btn .span-mother2 span:nth-child(10) { transition-duration: 0.65s; }
+.hero-btn .span-mother span:nth-child(11), .hero-btn .span-mother2 span:nth-child(11) { transition-duration: 0.7s; }
+.hero-btn .span-mother span:nth-child(12), .hero-btn .span-mother2 span:nth-child(12) { transition-duration: 0.75s; }
 
 /* About Section */
 .about-section {
@@ -786,8 +835,16 @@ body {
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+.project-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 6;
+}
+
 .project-details-btn {
-    width: 100%;
+    flex: 1;
     padding: 0.5rem;
     font-size: 0.875rem;
     font-weight: 600;
@@ -797,14 +854,35 @@ body {
     border-radius: 9999px;
     cursor: pointer;
     transition: all 0.5s ease;
-    margin-top: 1rem;
-    position: relative;
-    z-index: 6;
 }
 
 .project-details-btn:hover {
     color: white;
     background: var(--medium-blue);
+}
+
+.project-link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    color: var(--medium-blue);
+    background: var(--beige);
+    border-radius: 50%;
+    transition: all 0.5s ease;
+}
+
+.project-link-btn:hover {
+    background: var(--medium-blue);
+    color: white;
+    transform: scale(1.1);
+}
+
+.project-link-btn svg {
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .project-corner-decoration {
@@ -1198,33 +1276,93 @@ body {
     gap: 2rem;
     margin-top: 2rem;
     flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
 }
 
-.contact-icon {
+.contact-icons .icon-content {
+    margin: 0;
+    position: relative;
+}
+
+.contact-icons .icon-content .tooltip {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.contact-icons .icon-content:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    top: -50px;
+}
+
+.contact-icons .icon-content a {
+    position: relative;
+    overflow: hidden;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     width: 4rem;
     height: 4rem;
-    background: var(--beige);
     border-radius: 50%;
-    transition: all 0.5s ease;
-    box-shadow: 0 4px 6px var(--shadow-color);
     color: var(--medium-blue);
+    background-color: var(--beige);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px var(--shadow-color);
 }
 
-.contact-icon:hover {
-    background: var(--medium-blue);
-    transform: scale(1.1);
-    color: white;
+.contact-icons .icon-content a:hover {
     box-shadow: 0 10px 15px var(--shadow-color);
+    color: white;
+    transform: scale(1.1);
 }
 
-.contact-icon svg {
+.contact-icons .icon-content a svg {
+    position: relative;
+    z-index: 1;
     width: 2rem;
     height: 2rem;
     stroke: currentColor;
-    transition: all 0.5s ease;
+}
+
+.contact-icons .icon-content a .filled {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: var(--medium-blue);
+    transition: all 0.3s ease-in-out;
+}
+
+.contact-icons .icon-content a:hover .filled {
+    height: 100%;
+}
+
+.contact-icons .icon-content a[data-social="instagram"] .filled,
+.contact-icons .icon-content a[data-social="instagram"] ~ .tooltip {
+    background: linear-gradient(45deg, #a48192, #b8869c, #d59bb1);
+}
+
+.contact-icons .icon-content a[data-social="whatsapp"] .filled,
+.contact-icons .icon-content a[data-social="whatsapp"] ~ .tooltip {
+    background-color: #6a9c89;
+}
+
+.contact-icons .icon-content a[data-social="email"] .filled,
+.contact-icons .icon-content a[data-social="email"] ~ .tooltip {
+    background-color: #c0697c;
 }
 
 /* Footer */
@@ -1385,12 +1523,12 @@ body {
         gap: 1rem;
     }
 
-    .contact-icon {
+    .contact-icons .icon-content a {
         width: 3.5rem;
         height: 3.5rem;
     }
 
-    .contact-icon svg {
+    .contact-icons .icon-content a svg {
         width: 1.75rem;
         height: 1.75rem;
     }
