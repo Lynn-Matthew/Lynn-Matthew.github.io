@@ -614,14 +614,17 @@ body {
 }
 
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin-bottom: 4rem;
 }
 
 /* ===== PROJECT CARD (Option A – overlay description) ===== */
 .project-card {
+    flex: 1 1 min(100%, 320px);
+    max-width: 420px;
     position: relative;
     background: var(--card-bg);
     border-radius: 35px;
