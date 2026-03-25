@@ -1022,12 +1022,15 @@ body {
 }
 
 .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
 }
 
 .service-card {
+    flex: 1 1 min(100%, 300px);
+    max-width: 420px;
     position: relative;
     background: var(--card-bg);
     border-radius: 50px;
