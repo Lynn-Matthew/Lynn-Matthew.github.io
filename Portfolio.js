@@ -1,0 +1,982 @@
+/* ── Viewport scaling ── */
+(function () {
+  function applyScale() {
+    const scale = window.innerWidth / 1920;
+    document.documentElement.style.setProperty('--site-scale', scale);
+
+    const wrapper = document.getElementById('site-wrapper');
+    if (!wrapper) return;
+
+    // Clear any forced height so the wrapper sizes to its content
+    wrapper.style.height = 'auto';
+    document.body.style.height = 'auto';
+
+    // Force a reflow so scrollHeight reflects true content height
+    void wrapper.offsetHeight;
+
+    // Now set body height to the wrapper's visual scaled height
+    // so the browser scrollbar matches actual on-screen content length
+    document.body.style.height = (wrapper.scrollHeight * scale) + 'px';
+  }
+  applyScale();
+  window.addEventListener('resize', applyScale);
+})();
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ─── LUCIDE ─── */
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+
+  /* ─── GEAR (only runs if the element exists) ─── */
+  const gear = document.getElementById('Gear_Wheel');
+  if (gear) {
+    let gearTimer = null, gearPaused = false;
+    const gearHover = document.getElementById('gear-hover-target');
+    if (gearHover) {
+      gearHover.addEventListener('mouseenter', () => {
+        clearTimeout(gearTimer);
+        gear.style.animationDuration = '12s';
+        gearTimer = setTimeout(() => {
+          gear.style.animationPlayState = 'paused';
+          gearPaused = true;
+        }, 800);
+      });
+      gearHover.addEventListener('mouseleave', () => {
+        clearTimeout(gearTimer);
+        gear.style.animationPlayState = 'running';
+        gear.style.animationDuration = '4s';
+        gearPaused = false;
+      });
+    }
+  }
+
+  // --- Fullscreen detection for hero SVG ---
+  const heroSection = document.querySelector('.hero-section');
+  if (heroSection) {
+    const handleFullscreenChange = () => {
+      const isFullscreen = !!document.fullscreenElement;
+      if (isFullscreen) {
+        heroSection.classList.add('fullscreen');
+      } else {
+        heroSection.classList.remove('fullscreen');
+      }
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+    handleFullscreenChange();
+  }
+
+  /* ─── NAVIGATION ─── */
+/* ─── NAVIGATION ─── */
+const items = document.querySelectorAll(".nav-item");
+const indicator = document.getElementById("indicator");
+const indicatorWidth = 30;
+
+function moveIndicator(item) {
+  const manualX = item.dataset.indicatorX;
+  if (manualX) {
+    indicator.setAttribute("x", manualX);
+  } else {
+    const box = item.getBBox();
+    const centerX = box.x + box.width / 2;
+    indicator.setAttribute("x", centerX - indicatorWidth / 2);
+  }
+  indicator.setAttribute("width", indicatorWidth);
+}
+
+// Global fullscreen state tracker
+let isFullscreenMode = false;
+
+// Per-section scroll stop offsets — normal view
+const sectionScrollOffsets = {
+  'hero': 0,                 // Hero section (top of page)
+  'about': 90,             // Adjust offset for About section
+  'portfolio': 140,          // Adjust offset for Portfolio section
+  'services': 150,           // Adjust offset for Services section
+  'contact': 60             // Adjust offset for Contact section
+};
+
+// Per-section scroll stop offsets — fullscreen view
+const sectionScrollOffsetsFullscreen = {
+  'hero': 0,                 // Hero section (top of page)
+  'about': 100,              // Adjust offset for About section (fullscreen)
+  'portfolio': 80,           // Adjust offset for Portfolio section (fullscreen)
+  'services': 100,           // Adjust offset for Services section (fullscreen)
+  'contact': 400              // Adjust offset for Contact section (fullscreen)
+};
+
+// Update fullscreen state on change
+document.addEventListener('fullscreenchange', () => {
+  isFullscreenMode = !!document.fullscreenElement;
+});
+document.addEventListener('webkitfullscreenchange', () => {
+  isFullscreenMode = !!document.webkitFullscreenElement;
+});
+document.addEventListener('mozfullscreenchange', () => {
+  isFullscreenMode = !!document.mozFullScreenElement;
+});
+document.addEventListener('MSFullscreenChange', () => {
+  isFullscreenMode = !!document.msFullscreenElement;
+});
+
+function scrollToSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+
+  // Use getBoundingClientRect so we get the *visual* (rendered) position,
+  // not the DOM position which is offset by negative margins.
+  const navEl = document.querySelector('.nav');
+  const navHeight = navEl ? navEl.offsetHeight : 0;
+  const visualTop = section.getBoundingClientRect().top + window.scrollY - navHeight;
+  
+  // Get custom offset based on fullscreen mode
+  const offsetCollection = isFullscreenMode ? sectionScrollOffsetsFullscreen : sectionScrollOffsets;
+  const customOffset = offsetCollection[sectionId] || 0;
+  const finalScrollTop = visualTop + customOffset;
+
+  window.scrollTo({ top: finalScrollTop, behavior: 'smooth' });
+}
+window.scrollToSection = scrollToSection;
+
+const firstItem = document.getElementById("house");
+if (firstItem) {
+  moveIndicator(firstItem);
+  firstItem.classList.add("active");
+}
+
+items.forEach(item => {
+  item.addEventListener("click", () => {
+    items.forEach(i => i.classList.remove("active"));
+    item.classList.add("active");
+    moveIndicator(item);
+    
+    // Get the section ID from the nav item's data attribute
+    const sectionId = item.getAttribute("data-section");
+    
+    if (sectionId) {
+      scrollToSection(sectionId);
+    }
+  });
+});
+
+  /* ─── THEME TOGGLE ─── */
+  const themeBtn = document.getElementById('themeToggle');
+  function applyTheme(dark) {
+    document.body.classList.toggle('dark-mode', dark);
+    document.querySelector('.sun-icon')?.classList.toggle('hidden', dark);
+    document.querySelector('.moon-icon')?.classList.toggle('hidden', !dark);
+  }
+  if (themeBtn) {
+    const saved = localStorage.getItem('theme');
+    const lastSet = localStorage.getItem('themeLastSet');
+    if (saved && lastSet === new Date().toDateString()) {
+      applyTheme(saved === 'dark');
+    } else {
+      const h = new Date().getHours();
+      applyTheme(h >= 19 || h < 7);
+    }
+    themeBtn.addEventListener('click', e => {
+      const isDark = !document.body.classList.contains('dark-mode');
+      applyTheme(isDark);
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      localStorage.setItem('themeLastSet', new Date().toDateString());
+      const r = document.createElement('span');
+      r.classList.add('ripple');
+      const rect = themeBtn.getBoundingClientRect();
+      const s = Math.max(rect.width, rect.height);
+      r.style.cssText = `width:${s}px;height:${s}px;left:${e.clientX - rect.left - s / 2}px;top:${e.clientY - rect.top - s / 2}px`;
+      themeBtn.appendChild(r);
+      setTimeout(() => r.remove(), 650);
+    });
+  }
+
+  /* ─── MOBILE MENU ─── */
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (mobileBtn && mobileMenu) {
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileBtn.querySelector('.menu-icon')?.classList.toggle('hidden');
+      mobileBtn.querySelector('.close-icon')?.classList.toggle('hidden');
+    });
+  }
+
+  // ==================== PROJECTS DATA (FIXED SYNTAX) ====================
+  const projectsData = [
+     { id: 1, title: "Portfolio", description: "Complete Portfolio site which you are on now.", fullDescription: "A fully recursive, custom SVG‑illustrated portfolio environment. I drew every icon, the slot machine lever, and the physics‑based steam animation using pure vector math (86.7% HTML/SVG). It's a functional website that operates more like a vintage arcade cabinet than a webpage. The project card slider is activated by pulling a mechanical lever—because clicking a \"Load More\" button is too boring. If you're reading this, you've already seen the demo.", category: "Development", client: "Portfolio", year: "2026", technologies: ["Adobe Illustrator", "HTML", "CSS", "JS", "Adobe After Effects"], imageUrl:"https://digifloat.io/wp-content/uploads/2024/12/Royalty-Free-Illustrations-Twitter.jpg", link: "https://lynn-matthew.github.io/lynnMatthew/", galleryImages: ["Resources/Development/Portfolio/Portfolio.png"] },
+    { id: 2, title: "Cheat Sheet - Adobe Illustrator", description: "Custom cheat sheet designed specifically for Adobe Illustrator.", category: "Print Design", client: "Poster", year: "2026", technologies: ["Adobe Illustrator"], imageUrl: "https://img.freepik.com/free-vector/tiny-graphic-designer-drawing-with-big-pen-computer-screen-creators-work-creative-woman-working-laptop-flat-vector-illustration-digital-design-concept-banner-landing-web-page_74855-25342.jpg?semt=ais_hybrid&w=740&q=80", link:"", galleryImages: ["Resources/Print-Design/Cheat-Sheet/Cheat-Sheet.jpg"] },
+    { id: 3, title: "Queue Management System", description: "Responsive web design and development for an AI-powered productivity platform with dynamic interactions.", category: "Development", client: "Web Development", year: "2026", imageUrl: "https://img.freepik.com/premium-vector/illustration-showing-hospital-building-with-several-ambulances-parked-front-it_697880-24512.jpg?semt=ais_incoming&w=740&q=80", link: "#", galleryImages: ["Resources/Development/QMS/Screenshot (1).png", "Resources/Development/QMS/Screenshot (2).png", "Resources/Development/QMS/Screenshot (3).png","Resources/Development/QMS/Screenshot (4).png","Resources/Development/QMS/Screenshot (5).png","Resources/Development/QMS/Screenshot (6).png","Resources/Development/QMS/Screenshot (7).png","Resources/Development/QMS/Screenshot (8).png","Resources/Development/QMS/Screenshot (9).png","Resources/Development/QMS/Screenshot (10).png","Resources/Development/QMS/Screenshot (11).png","Resources/Development/QMS/Screenshot (12).png","Resources/Development/QMS/Screenshot (13).png","Resources/Development/QMS/Screenshot (14).png","Resources/Development/QMS/Screenshot (15).png"] },
+  ];
+
+  let currentCategory = "Top";
+  let scrollY = 0;
+  let maxScroll = 0;
+  let clipHeight = 0;
+  let contentHeight = 0;
+  let animating = false;
+  let animationFrame = null;
+
+  // ==================== MODAL FUNCTIONS (DEFINED BEFORE USE) ====================
+  let currentGallery = [];
+  let currentImageIndex = 0;
+
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  const closeModal = document.querySelector('.close-modal');
+  const prevBtn = document.querySelector('.prev-btn');
+  const nextBtn = document.querySelector('.next-btn');
+  const imageCounter = document.getElementById('imageCounter');
+
+  function updateModalImage() {
+    if (modalImage && currentGallery[currentImageIndex]) {
+      modalImage.src = currentGallery[currentImageIndex];
+      if (imageCounter) imageCounter.textContent = `${currentImageIndex + 1} / ${currentGallery.length}`;
+    }
+  }
+
+  function openGallery(images, startIndex = 0) {
+    if (!images || images.length === 0) {
+      showMessage('No additional images available for this project.');
+      return;
+    }
+    currentGallery = images;
+    currentImageIndex = startIndex;
+    updateModalImage();
+    if (modal) modal.classList.add('active');
+  }
+
+  function nextImage() {
+    if (currentImageIndex < currentGallery.length - 1) {
+      currentImageIndex++;
+      updateModalImage();
+    }
+  }
+
+  function prevImage() {
+    if (currentImageIndex > 0) {
+      currentImageIndex--;
+      updateModalImage();
+    }
+  }
+
+  if (closeModal) closeModal.onclick = () => modal?.classList.remove('active');
+  if (prevBtn) prevBtn.onclick = prevImage;
+  if (nextBtn) nextBtn.onclick = nextImage;
+  if (modal) modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+
+  document.addEventListener('keydown', (e) => {
+    if (!modal?.classList.contains('active')) return;
+    if (e.key === 'Escape') modal.classList.remove('active');
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'ArrowRight') nextImage();
+  });
+
+  // Details Modal
+  const detailsModal = document.getElementById('detailsModal');
+  const detailsTitle = document.getElementById('detailsTitle');
+  const detailsDescription = document.getElementById('detailsDescription');
+  const detailsClient = document.getElementById('detailsClient');
+  const detailsYear = document.getElementById('detailsYear');
+  const detailsTech = document.getElementById('detailsTech');
+  const detailsProjectLink = document.getElementById('detailsProjectLink');
+  const closeDetailsBtn = document.getElementById('closeDetailsBtn');
+  const closeDetailsSpan = document.querySelector('.close-details');
+  let currentProjectLink = '#';
+
+  function openDetailsModal(project) {
+    if (detailsTitle) detailsTitle.textContent = project.title;
+    if (detailsDescription) detailsDescription.textContent = project.fullDescription || project.description;
+    if (detailsClient) detailsClient.textContent = project.client || 'Not specified';
+    if (detailsYear) detailsYear.textContent = project.year || 'Not specified';
+    currentProjectLink = project.link || '#';
+    if (detailsTech) {
+      detailsTech.innerHTML = '';
+      if (project.technologies && project.technologies.length > 0) {
+        project.technologies.forEach(tech => {
+          const tag = document.createElement('span');
+          tag.className = 'tech-tag';
+          tag.textContent = tech;
+          detailsTech.appendChild(tag);
+        });
+      } else {
+        const noTech = document.createElement('span');
+        noTech.className = 'detail-value';
+        noTech.textContent = 'No technologies listed';
+        detailsTech.appendChild(noTech);
+      }
+    }
+    if (detailsModal) detailsModal.classList.add('active');
+  }
+
+  function closeDetailsModal() {
+    if (detailsModal) detailsModal.classList.remove('active');
+  }
+
+  if (closeDetailsBtn) closeDetailsBtn.onclick = closeDetailsModal;
+  if (closeDetailsSpan) closeDetailsSpan.onclick = closeDetailsModal;
+  if (detailsProjectLink) {
+    detailsProjectLink.onclick = () => {
+      if (currentProjectLink && currentProjectLink !== '#') {
+        window.open(currentProjectLink, '_blank');
+      } else {
+        showMessage('🔗 No project link available');
+      }
+    };
+  }
+  if (detailsModal) detailsModal.onclick = (e) => { if (e.target === detailsModal) closeDetailsModal(); };
+
+  // ==================== BUTTON RIPPLE EFFECT ====================
+  function addRippleEffect(buttonElement) {
+    const rect = buttonElement.querySelector('rect');
+    if (!rect) return;
+    buttonElement.addEventListener('click', (e) => {
+      const ripple = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      const bbox = rect.getBBox();
+      const centerX = bbox.x + bbox.width / 2;
+      const centerY = bbox.y + bbox.height / 2;
+      ripple.setAttribute('cx', centerX);
+      ripple.setAttribute('cy', centerY);
+      ripple.setAttribute('r', '5');
+      ripple.setAttribute('fill', 'rgba(255,255,255,0.6)');
+      ripple.setAttribute('stroke-width', '0');
+      buttonElement.appendChild(ripple);
+      let radius = 5;
+      let opacity = 0.6;
+      const animate = () => {
+        radius += 8;
+        opacity -= 0.05;
+        ripple.setAttribute('r', radius);
+        ripple.setAttribute('fill', `rgba(255,255,255,${opacity})`);
+        if (opacity > 0) {
+          requestAnimationFrame(animate);
+        } else {
+          ripple.remove();
+        }
+      };
+      requestAnimationFrame(animate);
+    });
+  }
+
+  // ==================== PROJECT CORE FUNCTIONS ====================
+  function showMessage(msg) {
+    const alertDiv = document.getElementById('svgAlert');
+    if (alertDiv) {
+      alertDiv.textContent = msg;
+      alertDiv.style.opacity = '1';
+      setTimeout(() => alertDiv.style.opacity = '0', 2000);
+    }
+  }
+
+  function getFilteredProjects() {
+    if (currentCategory === "Top") return projectsData;
+    return projectsData.filter(p => p.category === currentCategory);
+  }
+
+  function clearOldImages() {
+    for (let i = 1; i <= 6; i++) {
+      let imageGroup;
+      if (i === 1) imageGroup = document.querySelector('#Project-1 #Project-image');
+      else if (i === 2) imageGroup = document.querySelector('#Project-2 #Project-image-2');
+      else if (i === 3) imageGroup = document.querySelector('#Project-3 #Project-Image');
+      else if (i === 4) imageGroup = document.querySelector('#Project-4 #Project-image-4');
+      else if (i === 5) imageGroup = document.querySelector('#Project-5 #Project-image-5');
+      else if (i === 6) imageGroup = document.querySelector('#Project-6 #Project-Image-6');
+      if (imageGroup) {
+        const oldImg = imageGroup.querySelector('image');
+        if (oldImg) oldImg.remove();
+      }
+      const existingClip = document.querySelector(`#clipPath${i}`);
+      if (existingClip) existingClip.remove();
+    }
+  }
+
+  function updateScrollLimits() {
+    const bgRect = document.getElementById('Background-2');
+    if (!bgRect) return;
+    const bboxRect = bgRect.getBBox();
+    clipHeight = bboxRect.height;
+    const scrollContent = document.getElementById('scrollable-content');
+    if (!scrollContent) return;
+    const contentBBox = scrollContent.getBBox();
+    contentHeight = contentBBox.height + 190;
+    maxScroll = Math.max(0, contentHeight - clipHeight);
+    scrollY = Math.min(Math.max(scrollY, -maxScroll), 0);
+    applyScrollTransform();
+  }
+
+  function applyScrollTransform() {
+    const scrollContent = document.getElementById('scrollable-content');
+    if (scrollContent) scrollContent.setAttribute('transform', `translate(0, ${scrollY})`);
+  }
+
+  function smoothScrollTo(targetY) {
+    if (animating) return;
+    const startY = scrollY;
+    const diff = targetY - startY;
+    if (Math.abs(diff) < 0.5) return;
+    const startTime = performance.now();
+    const duration = 300;
+    function step(now) {
+      const elapsed = now - startTime;
+      let t = Math.min(1, elapsed / duration);
+      const ease = 1 - Math.pow(1 - t, 3);
+      const newY = startY + diff * ease;
+      scrollY = newY;
+      applyScrollTransform();
+      if (t < 1) animationFrame = requestAnimationFrame(step);
+      else {
+        scrollY = targetY;
+        applyScrollTransform();
+        animating = false;
+        animationFrame = null;
+        updateScrollLimits();
+      }
+    }
+    animating = true;
+    if (animationFrame) cancelAnimationFrame(animationFrame);
+    animationFrame = requestAnimationFrame(step);
+  }
+
+  function toggleScroll() {
+    if (animating) return;
+    const epsilon = 5;
+    const isAtTop = scrollY > -epsilon;
+    const isAtBottom = scrollY <= -maxScroll + epsilon;
+    let target;
+    if (isAtTop && maxScroll > 0) target = -maxScroll;
+    else target = 0;
+    smoothScrollTo(target);
+  }
+
+  function updateProjectCards() {
+    const filtered = getFilteredProjects();
+    const projectsToShow = filtered.slice(0, 6);
+    clearOldImages();
+
+    for (let idx = 0; idx < projectsToShow.length; idx++) {
+      const project = projectsToShow[idx];
+      const cardNum = idx + 1;
+
+      const titleElem = document.getElementById(`Project-Title${cardNum === 1 ? '' : cardNum === 2 ? '-2' : cardNum === 3 ? '-3' : cardNum === 4 ? '-4' : cardNum === 5 ? '-5' : '-6'}`);
+      if (titleElem) {
+        while (titleElem.firstChild) titleElem.removeChild(titleElem.firstChild);
+        titleElem.textContent = project.title;
+        titleElem.setAttribute("text-anchor", "middle");
+      }
+
+      const pathElem = document.getElementById(`imgPath${cardNum}`);
+      if (!pathElem) continue;
+      const bbox = pathElem.getBBox();
+      const { x, y, width, height } = bbox;
+
+      const clipId = `clipPath${cardNum}_${Date.now()}_${idx}`;
+      const clipPath = document.createElementNS("http://www.w3.org/2000/svg", "clipPath");
+      clipPath.setAttribute("id", clipId);
+      const usePath = document.createElementNS("http://www.w3.org/2000/svg", "use");
+      usePath.setAttribute("href", `#imgPath${cardNum}`);
+      clipPath.appendChild(usePath);
+      document.querySelector('svg').appendChild(clipPath);
+
+      const svgImage = document.createElementNS("http://www.w3.org/2000/svg", "image");
+      svgImage.setAttribute("href", project.imageUrl);
+      svgImage.setAttribute("x", x);
+      svgImage.setAttribute("y", y);
+      svgImage.setAttribute("width", width);
+      svgImage.setAttribute("height", height);
+      svgImage.setAttribute("preserveAspectRatio", "xMidYMid slice");
+      svgImage.setAttribute("clip-path", `url(#${clipId})`);
+
+      let imageGroup;
+      if (cardNum === 1) imageGroup = document.querySelector('#Project-1 #Project-image');
+      else if (cardNum === 2) imageGroup = document.querySelector('#Project-2 #Project-image-2');
+      else if (cardNum === 3) imageGroup = document.querySelector('#Project-3 #Project-Image');
+      else if (cardNum === 4) imageGroup = document.querySelector('#Project-4 #Project-image-4');
+      else if (cardNum === 5) imageGroup = document.querySelector('#Project-5 #Project-image-5');
+      else if (cardNum === 6) imageGroup = document.querySelector('#Project-6 #Project-Image-6');
+
+      if (imageGroup) {
+        imageGroup.insertBefore(svgImage, imageGroup.firstChild);
+        svgImage.addEventListener('load', () => requestAnimationFrame(() => updateScrollLimits()));
+      }
+
+      const detailsBtn = document.querySelector(`#Project-${cardNum} #Details_button, #Project-${cardNum} #Details_button-${cardNum === 2 ? '2' : cardNum === 3 ? '3' : cardNum === 4 ? '4' : cardNum === 5 ? '5' : '6'}`);
+      const linkBtn = document.querySelector(`#Project-${cardNum} #Link_button, #Project-${cardNum} #Link_button-${cardNum === 2 ? '2' : cardNum === 3 ? '3' : cardNum === 4 ? '4' : cardNum === 5 ? '5' : '6'}`);
+      const imagesBtn = document.querySelector(`#Project-${cardNum} #Images_button, #Project-${cardNum} #Images_button-${cardNum === 2 ? '2' : cardNum === 3 ? '3' : cardNum === 4 ? '4' : cardNum === 5 ? '5' : '6'}`);
+
+      if (detailsBtn) {
+        const newDetails = detailsBtn.cloneNode(true);
+        detailsBtn.parentNode.replaceChild(newDetails, detailsBtn);
+        newDetails.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openDetailsModal(project);
+        });
+        addRippleEffect(newDetails);
+      }
+      if (linkBtn) {
+        const newLink = linkBtn.cloneNode(true);
+        linkBtn.parentNode.replaceChild(newLink, linkBtn);
+        newLink.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (project.link && project.link !== '#') window.open(project.link, '_blank');
+          else showMessage(`🔗 Link for "${project.title}" – add your URL in projectsData`);
+        });
+        addRippleEffect(newLink);
+      }
+      if (imagesBtn) {
+        const newImagesBtn = imagesBtn.cloneNode(true);
+        imagesBtn.parentNode.replaceChild(newImagesBtn, imagesBtn);
+        newImagesBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (project.galleryImages && project.galleryImages.length > 0) {
+            openGallery(project.galleryImages, 0);
+          } else {
+            showMessage(`📸 No additional images for "${project.title}" yet.`);
+          }
+        });
+        addRippleEffect(newImagesBtn);
+      }
+    }
+
+    for (let i = projectsToShow.length + 1; i <= 6; i++) {
+      const titleElem = document.getElementById(`Project-Title${i === 1 ? '' : i === 2 ? '-2' : i === 3 ? '-3' : i === 4 ? '-4' : i === 5 ? '-5' : '-6'}`);
+      if (titleElem) {
+        while (titleElem.firstChild) titleElem.removeChild(titleElem.firstChild);
+        titleElem.textContent = "— No Project —";
+      }
+      let imageGroup;
+      if (i === 1) imageGroup = document.querySelector('#Project-1 #Project-image');
+      else if (i === 2) imageGroup = document.querySelector('#Project-2 #Project-image-2');
+      else if (i === 3) imageGroup = document.querySelector('#Project-3 #Project-Image');
+      else if (i === 4) imageGroup = document.querySelector('#Project-4 #Project-image-4');
+      else if (i === 5) imageGroup = document.querySelector('#Project-5 #Project-image-5');
+      else if (i === 6) imageGroup = document.querySelector('#Project-6 #Project-Image-6');
+      if (imageGroup) {
+        const oldImg = imageGroup.querySelector('image');
+        if (oldImg) oldImg.remove();
+      }
+    }
+    updateScrollLimits();
+  }
+
+  function initFilters() {
+    const filterGroups = ['Top', 'Illustration', 'Printdesign', 'SocialMediaDesign', 'Development'];
+
+    // Set Top as visually active on load
+    const topRect = document.querySelector('#Top rect');
+    if (topRect) topRect.setAttribute('fill', '#6b4e7e');
+
+    filterGroups.forEach(groupId => {
+      const group = document.getElementById(groupId);
+      if (!group) return;
+      group.style.cursor = 'pointer';
+      group.addEventListener('click', (e) => {
+        e.stopPropagation();
+        let newCategory = "Top";
+        if (groupId === 'Illustration') newCategory = "Illustration";
+        else if (groupId === 'Printdesign') newCategory = "Print Design";
+        else if (groupId === 'SocialMediaDesign') newCategory = "Social Media Design";
+        else if (groupId === 'Development') newCategory = "Development";
+        currentCategory = newCategory;
+        filterGroups.forEach(g => {
+          const rectElem = document.querySelector(`#${g} rect`);
+          if (rectElem) rectElem.setAttribute('fill', '#927ea6');
+        });
+        const activeRect = document.querySelector(`#${groupId} rect`);
+        if (activeRect) activeRect.setAttribute('fill', '#6b4e7e');
+        updateProjectCards();
+        showMessage(`Filter: ${currentCategory} (${getFilteredProjects().length} projects)`);
+        scrollY = 0;
+        applyScrollTransform();
+        updateScrollLimits();
+      });
+    });
+  }
+
+  // ==================== LEVER INTERACTION ====================
+  const leverFrames = [];
+  for (let i = 0; i <= 23; i++) {
+    leverFrames.push(document.getElementById(`frame-${i}`));
+  }
+
+  let currentLeverFrame = 0;
+  let isDraggingLever = false;
+  let snapBackTimer = null;
+  const pivotY = 3114;
+  const maxPullDist = 226;
+  const TRIGGER_FRAME = 16;
+
+  function showLeverFrame(index) {
+    index = Math.min(Math.max(index, 0), leverFrames.length - 1);
+    leverFrames.forEach((frame, i) => {
+      if (frame) frame.style.display = i === index ? '' : 'none';
+    });
+    currentLeverFrame = index;
+  }
+function getClientCoords(event) {
+    // Works for both mouse and touch events
+    if (event.touches && event.touches.length > 0) {
+      return { x: event.touches[0].clientX, y: event.touches[0].clientY };
+    }
+    return { x: event.clientX, y: event.clientY };
+  }
+
+  function getMouseY(event) {
+    const svgElem = document.querySelector('.projects-svg');
+    if (!svgElem) return 0;
+    const coords = getClientCoords(event);
+    const pt = svgElem.createSVGPoint();
+    pt.x = coords.x;
+    pt.y = coords.y;
+    const svgP = pt.matrixTransform(svgElem.getScreenCTM().inverse());
+    return svgP.y;
+  }
+
+  function onLeverMouseDown(e) {
+    if (!e.target.closest('.knob')) return;
+    e.preventDefault();
+    isDraggingLever = true;
+    if (snapBackTimer) clearTimeout(snapBackTimer);
+  }
+
+  function onLeverMouseMove(e) {
+    if (!isDraggingLever) return;
+    e.preventDefault();
+    const mouseY = getMouseY(e);
+    let dragDist = mouseY - pivotY;
+    dragDist = Math.min(Math.max(dragDist, 0), maxPullDist);
+    const ratio = dragDist / maxPullDist;
+    let frameIndex = Math.floor(ratio * (leverFrames.length - 1));
+    if (frameIndex !== currentLeverFrame) showLeverFrame(frameIndex);
+  }
+
+  function onLeverMouseUp(e) {
+    if (!isDraggingLever) return;
+    isDraggingLever = false;
+    const triggered = currentLeverFrame >= TRIGGER_FRAME;
+    if (triggered) {
+      toggleScroll();
+      showMessage('🎰 JACKPOT!');
+    }
+    let idx = currentLeverFrame;
+    function stepBack() {
+      if (idx <= 0) {
+        showLeverFrame(0);
+        return;
+      }
+      idx--;
+      showLeverFrame(idx);
+      snapBackTimer = setTimeout(stepBack, 1);
+    }
+    stepBack();
+  }
+
+  const leverGroup = document.getElementById('new-lever');
+  if (leverGroup) {
+    // Mouse events
+    leverGroup.addEventListener('mousedown', onLeverMouseDown);
+    window.addEventListener('mousemove', onLeverMouseMove);
+    window.addEventListener('mouseup', onLeverMouseUp);
+    // Touch events — same handlers, coords extracted inside
+    leverGroup.addEventListener('touchstart', onLeverMouseDown, { passive: false });
+    window.addEventListener('touchmove', onLeverMouseMove, { passive: false });
+    window.addEventListener('touchend', onLeverMouseUp);
+    showLeverFrame(0);
+  }
+
+  // Initialize projects after DOM is ready
+  setTimeout(() => {
+    initFilters();
+    updateProjectCards();
+    const topRect = document.querySelector('#Top rect');
+    if (topRect) topRect.setAttribute('fill', '#6b4e7e');
+    updateScrollLimits();
+  }, 100);
+
+}); 
+// SERVICES SECTION
+// Click handler for navigation/modal (customizable)
+const cards = ['Social-Media-Design', 'Illustration-2', 'Print_Design', 'Web-Dev'];
+cards.forEach(cardId => {
+  const card = document.getElementById(cardId);
+  if (card) {
+    card.addEventListener('click', () => {
+      console.log(`${cardId} clicked — you can add navigation or modal here`);
+      // Example: alert(`You clicked on ${cardId.replace('-', ' ')} service`);
+    });
+  }
+
+// Gear for contact section (Gear_Wheel-4)
+const contactGear = document.getElementById('Gear_Wheel-4');
+if (contactGear) {
+  // Compute the true bounding‑box center
+  const bbox = contactGear.getBBox();
+  const cx = bbox.x + bbox.width / 2;
+  const cy = bbox.y + bbox.height / 2;
+  contactGear.style.transformOrigin = `${cx}px ${cy}px`;
+  contactGear.style.animation = 'spin-4 4s linear infinite';
+}
+
+});
+
+
+
+/* ═══════════════════════════════════════════════
+   PULL-CHAIN INTERACTION — Stats Buttons
+   + Idle wind sway
+   + Experience modal, Projects scroll, Tools modal
+═══════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var MAX_PULL = 61;
+  var TRIGGER_THRESHOLD = 35;
+  var IDLE_THREAD_Y2 = 109.33;
+  var IDLE_RING_CY = 116.83;
+
+  // Spring physics
+  var STIFFNESS = 0.12;
+  var DAMPING = 0.72;
+  var PRECISION = 0.3;
+  var DRAG_RESISTANCE = 0.85;
+
+  // Idle sway
+  var SWAY_AMP_X1 = 3.2;
+  var SWAY_AMP_X2 = 1.4;
+  var SWAY_AMP_Y = 1.0;
+  var SWAY_SPEED_X1 = 0.0018;
+  var SWAY_SPEED_X2 = 0.0031;
+  var SWAY_SPEED_Y = 0.0014;
+  var PHASE_OFFSETS = [0, 2.1, 4.2];
+
+  var statNames = ['experience', 'projects', 'tools'];
+  var IDLE_X = { experience: 144, projects: 460.5, tools: 777 };
+
+  var chains = [];
+  var idleRAF = null;
+
+  function initPullChains() {
+    var aboutSvg = document.querySelector('.about-svg');
+    if (!aboutSvg) return;
+
+    statNames.forEach(function (name, idx) {
+      var thread = aboutSvg.querySelector('[data-thread="' + name + '"]');
+      var ring = aboutSvg.querySelector('[data-ring="' + name + '"]');
+      var ringHit = aboutSvg.querySelector('[data-ring-hit="' + name + '"]');
+      var statGroup = aboutSvg.querySelector('[data-stat="' + name + '"]');
+      if (!thread || !ring || !ringHit) return;
+
+      var state = {
+        name: name,
+        thread: thread,
+        ring: ring,
+        ringHit: ringHit,
+        statGroup: statGroup,
+        idleX: IDLE_X[name],
+        phase: PHASE_OFFSETS[idx],
+        dragging: false,
+        animating: false,
+        startY: 0,
+        currentDisplacement: 0,
+        velocity: 0
+      };
+
+      chains.push(state);
+
+      function screenToSvgDeltaY(screenDelta) {
+        var ctm = aboutSvg.getScreenCTM();
+        if (!ctm) return screenDelta;
+        return screenDelta / ctm.d;
+      }
+
+      function updatePullPositions(displacement) {
+        displacement = Math.max(-8, Math.min(MAX_PULL, displacement));
+        state.currentDisplacement = displacement;
+        thread.setAttribute('y2', IDLE_THREAD_Y2 + Math.max(0, displacement));
+        ring.setAttribute('cy', IDLE_RING_CY + displacement);
+        ringHit.setAttribute('cy', IDLE_RING_CY + displacement);
+        thread.setAttribute('x2', state.idleX);
+        ring.setAttribute('cx', state.idleX);
+        ringHit.setAttribute('cx', state.idleX);
+      }
+
+      function springBack(triggered) {
+        state.animating = true;
+        ring.style.cursor = 'grab';
+        ringHit.style.cursor = 'grab';
+        state.velocity = 0;
+
+        function tick() {
+          var force = -STIFFNESS * state.currentDisplacement;
+          state.velocity = (state.velocity + force) * DAMPING;
+          var next = state.currentDisplacement + state.velocity;
+
+          if (Math.abs(next) < PRECISION && Math.abs(state.velocity) < PRECISION) {
+            updatePullPositions(0);
+            state.animating = false;
+            return;
+          }
+
+          updatePullPositions(next);
+          requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+
+        if (triggered) {
+          onStatTriggered(name, statGroup);
+        }
+      }
+
+      function onPointerDown(e) {
+        if (state.animating) return;
+        e.preventDefault();
+        e.stopPropagation();
+        state.dragging = true;
+        var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        state.startY = clientY;
+        state.currentDisplacement = 0;
+        ring.style.cursor = 'grabbing';
+        ringHit.style.cursor = 'grabbing';
+      }
+
+      function onPointerMove(e) {
+        if (!state.dragging) return;
+        e.preventDefault();
+        var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        var screenDelta = clientY - state.startY;
+        var svgDelta = screenToSvgDeltaY(screenDelta);
+
+        var resisted = svgDelta > 0
+          ? svgDelta * DRAG_RESISTANCE + svgDelta * (1 - DRAG_RESISTANCE) * (1 - svgDelta / (MAX_PULL * 2))
+          : 0;
+
+        updatePullPositions(resisted);
+      }
+
+      function onPointerUp() {
+        if (!state.dragging) return;
+        state.dragging = false;
+        var triggered = state.currentDisplacement >= TRIGGER_THRESHOLD;
+        springBack(triggered);
+      }
+
+      [ring, ringHit].forEach(function (el) {
+        el.addEventListener('mousedown', onPointerDown);
+        el.addEventListener('touchstart', onPointerDown, { passive: false });
+      });
+
+      document.addEventListener('mousemove', onPointerMove);
+      document.addEventListener('touchmove', onPointerMove, { passive: false });
+      document.addEventListener('mouseup', onPointerUp);
+      document.addEventListener('touchend', onPointerUp);
+    });
+
+    startIdleSway();
+    initModals();
+  }
+
+  /* ── Idle Wind Sway ── */
+  function startIdleSway() {
+    var startTime = performance.now();
+
+    function swayTick(now) {
+      var t = now - startTime;
+
+      for (var i = 0; i < chains.length; i++) {
+        var c = chains[i];
+        if (c.dragging || c.animating) continue;
+
+        var phase = c.phase;
+        var swayX = Math.sin(t * SWAY_SPEED_X1 + phase) * SWAY_AMP_X1
+                  + Math.sin(t * SWAY_SPEED_X2 + phase * 1.7) * SWAY_AMP_X2;
+        var swayY = Math.sin(t * SWAY_SPEED_Y + phase * 0.6) * SWAY_AMP_Y;
+
+        var cx = c.idleX + swayX;
+        var cy = IDLE_RING_CY + swayY;
+        var ty2 = IDLE_THREAD_Y2 + swayY;
+
+        c.thread.setAttribute('x2', cx);
+        c.thread.setAttribute('y2', ty2);
+        c.ring.setAttribute('cx', cx);
+        c.ring.setAttribute('cy', cy);
+        c.ringHit.setAttribute('cx', cx);
+        c.ringHit.setAttribute('cy', cy);
+      }
+
+      idleRAF = requestAnimationFrame(swayTick);
+    }
+
+    idleRAF = requestAnimationFrame(swayTick);
+  }
+
+  /* ── Stat Triggered Actions ── */
+  function onStatTriggered(name, groupEl) {
+    // Flash the pill
+    var pill = groupEl.querySelector('rect[fill="#729749"]');
+    if (pill) {
+      var origFill = pill.getAttribute('fill');
+      pill.setAttribute('fill', '#8bc34a');
+      setTimeout(function () { pill.setAttribute('fill', origFill); }, 300);
+    }
+
+    switch (name) {
+      case 'experience':
+        openModal('experience-modal');
+        break;
+      case 'projects':
+        if (window.scrollToSection) {
+          window.scrollToSection('portfolio');
+        }
+        break;
+      case 'tools':
+        openModal('tools-modal');
+        break;
+    }
+  }
+
+  /* ── Modal System ── */
+  function openModal(id) {
+    var overlay = document.getElementById(id);
+    if (!overlay) return;
+    overlay.classList.add('active');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(overlay) {
+    overlay.classList.remove('active');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function initModals() {
+    var overlays = document.querySelectorAll('.stat-modal-overlay');
+    overlays.forEach(function (overlay) {
+      // Close on X button
+      var closeBtn = overlay.querySelector('.stat-modal-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function () { closeModal(overlay); });
+      }
+      // Close on backdrop click
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeModal(overlay);
+      });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        overlays.forEach(function (overlay) {
+          if (overlay.classList.contains('active')) closeModal(overlay);
+        });
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPullChains);
+  } else {
+    initPullChains();
+  }
+})();
